@@ -6,7 +6,9 @@ import com.practice.practice.dto.response.ProfesorResponseDTO;
 import com.practice.practice.model.Profesor;
 import com.practice.practice.repository.ProfesorRepository;
 import com.practice.practice.service.ProfesorService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProfesorServiceImplementation implements ProfesorService {
     private final ProfesorRepository profesorRepository;
     private final ProfesorMapper profesorMapper;

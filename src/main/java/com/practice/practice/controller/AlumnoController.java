@@ -1,5 +1,6 @@
 package com.practice.practice.controller;
 
+import com.practice.practice.dto.request.AlumnoCursoRequestDTO;
 import com.practice.practice.dto.request.AlumnoRequestDTO;
 import com.practice.practice.dto.response.AlumnoResponseDTO;
 import com.practice.practice.service.AlumnoService;
@@ -21,6 +22,12 @@ public class AlumnoController {
     public ResponseEntity<AlumnoResponseDTO> createAlumno(@RequestBody AlumnoRequestDTO alumnoRequestDTO){
         AlumnoResponseDTO objAlumnoResponse = alumnoService.createAlumno(alumnoRequestDTO);
         return ResponseEntity.ok(objAlumnoResponse);
+    }
+
+    @PostMapping("/asignCourse")
+    public ResponseEntity<AlumnoResponseDTO> asignStudentToCourse(@RequestBody AlumnoCursoRequestDTO alumnoCursoRequestDTO){
+        AlumnoResponseDTO objAlumnoResponse = alumnoService.asignStudentToCourse(alumnoCursoRequestDTO);
+        return  ResponseEntity.ok(objAlumnoResponse);
     }
 
 }
