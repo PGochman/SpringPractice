@@ -2,6 +2,10 @@ package com.practice.practice.dto.request;
 
 import com.practice.practice.model.Alumno;
 import com.practice.practice.model.Curso;
+import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.NumberFormat;
+
+import javax.validation.constraints.*;
 
 public class CalificacionRequestDTO {
     private Long id;
