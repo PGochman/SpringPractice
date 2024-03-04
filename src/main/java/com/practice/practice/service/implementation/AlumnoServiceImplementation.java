@@ -54,9 +54,7 @@ public class AlumnoServiceImplementation implements AlumnoService {
         Alumno objStudent = findStudentById(alumnoCursoRequestDTO.getStudentId());
         Curso objCourse = cursoService.findCourseById(alumnoCursoRequestDTO.getCourseId());
         List<Curso> objStudentCourses = objStudent.getCourses();
-        if(objStudent.getId() != null && objCourse.getId() != null){
-            objStudentCourses.add(objCourse);
-        }
+        objStudentCourses.add(objCourse);
         objStudent.setCourses(objStudentCourses);
         alumnoRepository.save(objStudent);
         return alumnoMapper.alumnoToResponse(objStudent);
