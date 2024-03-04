@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/curso")
 public class CursoController {
@@ -19,7 +21,7 @@ public class CursoController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<CursoResponseDTO> createCurso(@RequestBody CursoRequestDTO cursoRequestDTO){
+    public ResponseEntity<CursoResponseDTO> createCurso(@Valid @RequestBody CursoRequestDTO cursoRequestDTO){
         CursoResponseDTO cursoResponseDTO = cursoService.createCurso(cursoRequestDTO);
         return ResponseEntity.ok(cursoResponseDTO);
     }
