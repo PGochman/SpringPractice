@@ -32,11 +32,8 @@ public class AlumnoServiceImplementation implements AlumnoService {
     public AlumnoResponseDTO createAlumno(AlumnoRequestDTO alumnoRequestDTO){
         Alumno objAlumno = alumnoMapper.requestToAlumno(alumnoRequestDTO);
         List<Curso> courses = new ArrayList<>();
-        for (long id : alumnoRequestDTO.getCoursesId()){
-            Curso curso = cursoService.findCourseById(id);
-            if(curso.getId() != null){
-                courses.add(curso);
-            }
+        if(alumnoRequestDTO.getCoursesId() != null){
+            courses = cursoService.getAllCoursesByIds(alumnoRequestDTO.getCoursesId());
         }
         objAlumno.setCourses(courses);
         alumnoRepository.save(objAlumno);
@@ -63,5 +60,17 @@ public class AlumnoServiceImplementation implements AlumnoService {
         objStudent.setCourses(objStudentCourses);
         alumnoRepository.save(objStudent);
         return alumnoMapper.alumnoToResponse(objStudent);
+    }
+
+    @Override
+    public List<Alumno> getAllStudentsByIds(List<Long> studentsIds){
+        List<Alumno> students = new ArrayList<>();
+        for (Long id: studentsIds){
+            Alumno student = findStudentById(id);
+            if(student.getId() != null){
+                students.add(student);
+            }
+        }
+        return students;
     }
 }

@@ -9,17 +9,17 @@ public class CursoRequestDTO {
     private String name;
     private String code;
     private String description;
-    private List<Alumno> students;
+    private List<Long> studentsIds;
 
     public CursoRequestDTO() {
     }
 
-    public CursoRequestDTO(Long id, String name, String code, String description, List<Alumno> students) {
+    public CursoRequestDTO(Long id, String name, String code, String description, List<Long> studentsIds) {
         this.id = id;
         this.name = name;
         this.code = code;
         this.description = description;
-        this.students = students;
+        this.studentsIds = studentsIds;
     }
 
     public Long getId() {
@@ -54,11 +54,11 @@ public class CursoRequestDTO {
         this.description = description;
     }
 
-    public List<Alumno> getStudents() {
-        return students;
+    public List<Long> getStudentsIds() {
+        return studentsIds;
     }
 
-    public void setStudents(List<Alumno> students) {
-        this.students = students;
+    public void setStudentsIds(List<Long> studentsIds) {
+        this.studentsIds = studentsIds;
     }
 }

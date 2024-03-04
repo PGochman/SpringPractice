@@ -22,7 +22,7 @@ public class AlumnoRequestDTO {
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.address = address;
-        this.coursesId = this.coursesId;
+        this.coursesId = coursesId;
     }
 
     public Long getId() {

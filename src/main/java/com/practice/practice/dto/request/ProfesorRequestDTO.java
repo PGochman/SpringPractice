@@ -9,14 +9,14 @@ public class ProfesorRequestDTO {
     private String name;
     private String lastName;
     private String specialty;
-    private List<Curso> courses;
+    private List<Long> coursesId;
 
-    public ProfesorRequestDTO(Long id, String name, String lastName, String specialty, List<Curso> courses) {
+    public ProfesorRequestDTO(Long id, String name, String lastName, String specialty, List<Long> coursesId) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.specialty = specialty;
-        this.courses = courses;
+        this.coursesId = coursesId;
     }
 
     public Long getId() {
@@ -51,12 +51,12 @@ public class ProfesorRequestDTO {
         this.specialty = specialty;
     }
 
-    public List<Curso> getCourses() {
-        return courses;
+    public List<Long> getCoursesId() {
+        return coursesId;
     }
 
-    public void setCourses(List<Curso> courses) {
-        this.courses = courses;
+    public void setCoursesId(List<Long> coursesId) {
+        this.coursesId = coursesId;
     }
 
     public ProfesorRequestDTO() {
