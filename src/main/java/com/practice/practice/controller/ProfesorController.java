@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/profesor")
 public class ProfesorController {
@@ -20,13 +22,13 @@ public class ProfesorController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ProfesorResponseDTO> createProfesor(@RequestBody ProfesorRequestDTO profesorRequestDTO){
+    public ResponseEntity<ProfesorResponseDTO> createProfesor(@Valid @RequestBody ProfesorRequestDTO profesorRequestDTO){
         ProfesorResponseDTO profesorResponseDTO = profesorService.createProfesor(profesorRequestDTO);
         return ResponseEntity.ok(profesorResponseDTO);
     }
 
     @PostMapping("/asignCourse")
-    public ResponseEntity<ProfesorResponseDTO>  asignProfesorToCourse(@RequestBody ProfesorCursoRequestDTO profesorCursoRequestDTO){
+    public ResponseEntity<ProfesorResponseDTO>  asignProfesorToCourse(@Valid @RequestBody ProfesorCursoRequestDTO profesorCursoRequestDTO){
         ProfesorResponseDTO profesorResponseDTO = profesorService.asignProfesorToCourse(profesorCursoRequestDTO);
         return ResponseEntity.ok(profesorResponseDTO);
     }

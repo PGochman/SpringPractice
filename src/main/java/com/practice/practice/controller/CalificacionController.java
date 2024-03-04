@@ -26,13 +26,13 @@ public class CalificacionController {
     }
 
     @GetMapping("/student/{id}")
-    public ResponseEntity<List<CalificacionResponseDTO>> getCalificacionByStudentId(@PathVariable Long id){
+    public ResponseEntity<List<CalificacionResponseDTO>> getCalificacionByStudentId(@Valid @PathVariable Long id){
         List<CalificacionResponseDTO> calificacionList = calificacionService.getCalificacionByStudentId(id);
         return ResponseEntity.ok(calificacionList);
     }
 
     @GetMapping("/course/{id}")
-    public ResponseEntity<List<CalificacionResponseDTO>> getCalificacionByCourseId(@PathVariable Long id){
+    public ResponseEntity<List<CalificacionResponseDTO>> getCalificacionByCourseId(@Valid @PathVariable Long id){
         List<CalificacionResponseDTO> calificacionList = calificacionService.getCalificacionByCourseId(id);
         return ResponseEntity.ok(calificacionList);
     }

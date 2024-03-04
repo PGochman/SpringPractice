@@ -2,14 +2,19 @@ package com.practice.practice.dto.request;
 
 import com.practice.practice.model.Curso;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
 public class AlumnoRequestDTO {
     private Long id;
+    @NotNull(message = "Se debe ingresar un nombre del estudiante")
     private String name;
+    @NotNull(message = "Se debe ingresar un apellido del estudiante")
     private String lastName;
+    @NotNull(message = "Se debe ingresar una fecha de nacimiento del estudiante")
     private Date birthDate;
+    @NotNull(message = "Se debe ingresar una direccion del estudiante")
     private String address;
     private List<Long> coursesId;
 

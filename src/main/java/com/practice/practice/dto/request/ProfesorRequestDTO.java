@@ -2,12 +2,16 @@ package com.practice.practice.dto.request;
 
 import com.practice.practice.model.Curso;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class ProfesorRequestDTO {
     private Long id;
+    @NotNull(message = "Se debe ingresar el nombre del profesor")
     private String name;
+    @NotNull(message = "Se debe ingresar el apellido del profesor")
     private String lastName;
+    @NotNull(message = "Se debe ingresar la especialidad del profesor")
     private String specialty;
     private List<Long> coursesId;
 
