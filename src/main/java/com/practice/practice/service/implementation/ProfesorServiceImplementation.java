@@ -44,21 +44,14 @@ public class ProfesorServiceImplementation implements ProfesorService {
         Profesor objProfesor = findProfesorById(profesorCursoRequestDTO.getProfesorId());
         Curso objCurso = cursoService.findCourseById(profesorCursoRequestDTO.getCourseId());
         List<Curso> courses = objProfesor.getCourses();
-        if(objCurso.getId() != null && objProfesor.getId() != null){
-            courses.add(objCurso);
-            objProfesor.setCourses(courses);
-        }
+        courses.add(objCurso);
+        objProfesor.setCourses(courses);
         profesorRepository.save(objProfesor);
         return profesorMapper.profesorToResponse(objProfesor);
     }
 
     @Override
     public Profesor findProfesorById(Long profesorId) {
-        Profesor objProfesor = new Profesor();
-        Optional<Profesor> found = profesorRepository.findById(profesorId);
-        if(found.isPresent()){
-            objProfesor = found.get();
-        }
-        return objProfesor;
+        return profesorRepository.findById(profesorId).orElseThrow(() -> new NullPointerException("No existe profesor con id: " + profesorId));
     }
 }
