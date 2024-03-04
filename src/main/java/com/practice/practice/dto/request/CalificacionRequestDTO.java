@@ -7,18 +7,18 @@ public class CalificacionRequestDTO {
     private Long id;
     private Float grade;
     private String evaluationType;
-    private Alumno student;
-    private Curso course;
+    private Long studentId;
+    private Long courseId;
 
     public CalificacionRequestDTO() {
     }
 
-    public CalificacionRequestDTO(Long id, Float grade, String evaluationType, Alumno student, Curso course) {
+    public CalificacionRequestDTO(Long id, Float grade, String evaluationType, Long studentId, Long courseId) {
         this.id = id;
         this.grade = grade;
         this.evaluationType = evaluationType;
-        this.student = student;
-        this.course = course;
+        this.studentId = studentId;
+        this.courseId = courseId;
     }
 
     public Long getId() {
@@ -45,19 +45,19 @@ public class CalificacionRequestDTO {
         this.evaluationType = evaluationType;
     }
 
-    public Alumno getStudent() {
-        return student;
+    public Long getStudentId() {
+        return studentId;
     }
 
-    public void setStudent(Alumno student) {
-        this.student = student;
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
-    public Curso getCourse() {
-        return course;
+    public Long getCourseId() {
+        return courseId;
     }
 
-    public void setCourse(Curso course) {
-        this.course = course;
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 }

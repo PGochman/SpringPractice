@@ -10,6 +10,7 @@ import com.practice.practice.service.AlumnoService;
 import com.practice.practice.service.CursoService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +18,6 @@ import java.util.Optional;
 public class CursoServiceImplementation implements CursoService {
     private final CursoRepository cursoRepository;
     private final CursoMapper cursoMapper;
-
     public CursoServiceImplementation(CursoRepository cursoRepository, CursoMapper cursoMapper) {
         this.cursoRepository = cursoRepository;
         this.cursoMapper = cursoMapper;
@@ -38,5 +38,17 @@ public class CursoServiceImplementation implements CursoService {
             objCurso = found.get();
         }
         return objCurso;
+    }
+
+    @Override
+    public List<Curso> getAllCoursesByIds(List<Long> coursesIds){
+        List<Curso> courses = new ArrayList<>();
+        for (Long id: coursesIds){
+            Curso course = findCourseById(id);
+            if(course.getId() != null){
+                courses.add(course);
+            }
+        }
+        return courses;
     }
 }
