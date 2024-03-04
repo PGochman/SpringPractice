@@ -6,6 +6,7 @@ import com.practice.practice.service.CalificacionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,7 +19,7 @@ public class CalificacionController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<CalificacionResponseDTO> registerCalificacion (@RequestBody CalificacionRequestDTO calificacionRequestDTO){
+    public ResponseEntity<CalificacionResponseDTO> registerCalificacion (@Valid @RequestBody CalificacionRequestDTO calificacionRequestDTO){
         System.out.println(calificacionRequestDTO.toString());
         CalificacionResponseDTO calificacionResponseDTO = calificacionService.registerCalificacion(calificacionRequestDTO);
         return ResponseEntity.ok(calificacionResponseDTO);

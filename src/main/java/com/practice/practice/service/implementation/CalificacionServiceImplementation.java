@@ -32,15 +32,11 @@ public class CalificacionServiceImplementation implements CalificacionService {
     @Override
     public CalificacionResponseDTO registerCalificacion(CalificacionRequestDTO calificacionRequestDTO){
         Calificacion objCalificacion = calificacionMapper.requestToCalificacion(calificacionRequestDTO);
-        Alumno student = new Alumno();
-        Curso course = new Curso();
-        if(calificacionRequestDTO.getStudentId() != null && calificacionRequestDTO.getCourseId() != null){
-            student = alumnoService.findStudentById(calificacionRequestDTO.getStudentId());
-            course = cursoService.findCourseById(calificacionRequestDTO.getCourseId());
-        }
-        if(student.getId() != null && course.getId() != null){
+        Alumno student = alumnoService.findStudentById(calificacionRequestDTO.getStudentId());
+        Curso course = cursoService.findCourseById(calificacionRequestDTO.getCourseId());
+        objCalificacion.setStudent(student);
+        if(student != null && course.getId() != null){
             objCalificacion.setCourse(course);
-            objCalificacion.setStudent(student);
         }
         calificacionRepository.save(objCalificacion);
         return calificacionMapper.calificacionToResponse(objCalificacion);
