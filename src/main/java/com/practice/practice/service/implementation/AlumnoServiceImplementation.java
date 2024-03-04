@@ -11,6 +11,7 @@ import com.practice.practice.repository.AlumnoRepository;
 import com.practice.practice.repository.CursoRepository;
 import com.practice.practice.service.AlumnoService;
 import com.practice.practice.service.CursoService;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,12 +42,7 @@ public class AlumnoServiceImplementation implements AlumnoService {
     }
     @Override
     public Alumno findStudentById(Long studentId){
-        Alumno alumno = new Alumno();
-        Optional<Alumno> found = alumnoRepository.findById(studentId);
-        if(found.isPresent()){
-            alumno = found.get();
-        }
-        return alumno;
+        return alumnoRepository.findById(studentId).orElseThrow(() -> new NullPointerException("No existe un alumno con id: " + studentId));
     }
 
     @Override

@@ -32,12 +32,7 @@ public class CursoServiceImplementation implements CursoService {
 
     @Override
     public Curso findCourseById(Long id){
-        Curso objCurso = new Curso();
-        Optional<Curso> found = cursoRepository.findById(id);
-        if(found.isPresent()) {
-            objCurso = found.get();
-        }
-        return objCurso;
+        return cursoRepository.findById(id).orElseThrow(() -> new NullPointerException("No existe el curso con id: " + id));
     }
 
     @Override
