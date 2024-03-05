@@ -2,12 +2,16 @@ package com.practice.practice.dto.request;
 
 import com.practice.practice.model.Alumno;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class CursoRequestDTO {
     private Long id;
+    @NotNull(message = "Se debe ingresar el nombre del curso")
     private String name;
+    @NotNull(message = "Se debe ingresar el codigo del curso")
     private String code;
+    @NotNull(message = "Se debe ingresar una descripcion del curso")
     private String description;
     private List<Long> studentsIds;
 

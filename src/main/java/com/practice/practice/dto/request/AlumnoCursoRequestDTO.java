@@ -1,8 +1,14 @@
 package com.practice.practice.dto.request;
 
+import javax.validation.constraints.*;
+
 public class AlumnoCursoRequestDTO {
     private Long id;
+    @NotNull(message = "El id del estudiante no puede ser nulo, enviar un valor")
+    @Positive(message = "El id del estudiante debe ser un numero positivo")
     private Long studentId;
+    @NotNull(message = "El id del curso no puede ser nulo, enviar un valor")
+    @Positive(message = "El id del curso debe ser un numero positivo")
     private Long courseId;
 
     public AlumnoCursoRequestDTO() {

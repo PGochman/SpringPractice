@@ -7,6 +7,8 @@ import com.practice.practice.service.AlumnoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/alumno")
 public class AlumnoController {
@@ -16,13 +18,13 @@ public class AlumnoController {
         this.alumnoService = alumnoService;
     }
     @PostMapping("/create")
-    public ResponseEntity<AlumnoResponseDTO> createAlumno(@RequestBody AlumnoRequestDTO alumnoRequestDTO){
+    public ResponseEntity<AlumnoResponseDTO> createAlumno(@Valid @RequestBody AlumnoRequestDTO alumnoRequestDTO){
         AlumnoResponseDTO objAlumnoResponse = alumnoService.createAlumno(alumnoRequestDTO);
         return ResponseEntity.ok(objAlumnoResponse);
     }
 
     @PostMapping("/asignCourse")
-    public ResponseEntity<AlumnoResponseDTO> asignStudentToCourse(@RequestBody AlumnoCursoRequestDTO alumnoCursoRequestDTO){
+    public ResponseEntity<AlumnoResponseDTO> asignStudentToCourse(@Valid @RequestBody AlumnoCursoRequestDTO alumnoCursoRequestDTO){
         AlumnoResponseDTO objAlumnoResponse = alumnoService.asignStudentToCourse(alumnoCursoRequestDTO);
         return  ResponseEntity.ok(objAlumnoResponse);
     }
