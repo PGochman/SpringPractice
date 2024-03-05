@@ -2,6 +2,7 @@ package com.practice.practice.controller;
 
 import com.practice.practice.dto.request.CalificacionRequestDTO;
 import com.practice.practice.dto.response.CalificacionResponseDTO;
+import com.practice.practice.exception.ExceptionNotFound;
 import com.practice.practice.service.CalificacionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class CalificacionController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<CalificacionResponseDTO> registerCalificacion (@Valid @RequestBody CalificacionRequestDTO calificacionRequestDTO){
+    public ResponseEntity<CalificacionResponseDTO> registerCalificacion (@Valid @RequestBody CalificacionRequestDTO calificacionRequestDTO) throws ExceptionNotFound {
         System.out.println(calificacionRequestDTO.toString());
         CalificacionResponseDTO calificacionResponseDTO = calificacionService.registerCalificacion(calificacionRequestDTO);
         return ResponseEntity.ok(calificacionResponseDTO);

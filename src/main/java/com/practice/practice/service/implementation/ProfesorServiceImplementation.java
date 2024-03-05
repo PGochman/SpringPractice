@@ -4,6 +4,7 @@ import com.practice.practice.dto.mapper.ProfesorMapper;
 import com.practice.practice.dto.request.ProfesorCursoRequestDTO;
 import com.practice.practice.dto.request.ProfesorRequestDTO;
 import com.practice.practice.dto.response.ProfesorResponseDTO;
+import com.practice.practice.exception.ExceptionNotFound;
 import com.practice.practice.model.Curso;
 import com.practice.practice.model.Profesor;
 import com.practice.practice.repository.ProfesorRepository;
@@ -28,7 +29,7 @@ public class ProfesorServiceImplementation implements ProfesorService {
     }
 
     @Override
-    public ProfesorResponseDTO createProfesor(ProfesorRequestDTO profesorRequestDTO){
+    public ProfesorResponseDTO createProfesor(ProfesorRequestDTO profesorRequestDTO) throws ExceptionNotFound {
         Profesor objProfesor = profesorMapper.requestToProfesor(profesorRequestDTO);
         List<Curso> courses = new ArrayList<>();
         if(profesorRequestDTO.getCoursesId() != null){
@@ -40,7 +41,7 @@ public class ProfesorServiceImplementation implements ProfesorService {
     }
 
     @Override
-    public ProfesorResponseDTO asignProfesorToCourse(ProfesorCursoRequestDTO profesorCursoRequestDTO){
+    public ProfesorResponseDTO asignProfesorToCourse(ProfesorCursoRequestDTO profesorCursoRequestDTO) throws ExceptionNotFound {
         Profesor objProfesor = findProfesorById(profesorCursoRequestDTO.getProfesorId());
         Curso objCurso = cursoService.findCourseById(profesorCursoRequestDTO.getCourseId());
         List<Curso> courses = objProfesor.getCourses();
@@ -51,7 +52,7 @@ public class ProfesorServiceImplementation implements ProfesorService {
     }
 
     @Override
-    public Profesor findProfesorById(Long profesorId) {
-        return profesorRepository.findById(profesorId).orElseThrow(() -> new NullPointerException("No existe profesor con id: " + profesorId));
+    public Profesor findProfesorById(Long profesorId) throws ExceptionNotFound {
+        return profesorRepository.findById(profesorId).orElseThrow(() -> new ExceptionNotFound("profesor", "ID", profesorId.toString()));
     }
 }

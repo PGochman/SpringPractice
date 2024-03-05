@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"birthDate"})})
 public class Alumno {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

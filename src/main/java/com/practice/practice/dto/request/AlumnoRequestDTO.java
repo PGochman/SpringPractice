@@ -3,6 +3,7 @@ package com.practice.practice.dto.request;
 import com.practice.practice.model.Curso;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class AlumnoRequestDTO {
     @NotNull(message = "Se debe ingresar un apellido del estudiante")
     private String lastName;
     @NotNull(message = "Se debe ingresar una fecha de nacimiento del estudiante")
+    @Past(message = "La fecha de nacimiento debe ser anterior a la de hoy")
     private Date birthDate;
     @NotNull(message = "Se debe ingresar una direccion del estudiante")
     private String address;

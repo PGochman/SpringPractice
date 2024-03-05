@@ -5,6 +5,7 @@ import com.practice.practice.dto.request.AlumnoCursoRequestDTO;
 import com.practice.practice.dto.request.AlumnoRequestDTO;
 import com.practice.practice.dto.response.AlumnoResponseDTO;
 import com.practice.practice.dto.response.CursoResponseDTO;
+import com.practice.practice.exception.ExceptionNotFound;
 import com.practice.practice.model.Alumno;
 import com.practice.practice.model.Curso;
 import com.practice.practice.repository.AlumnoRepository;
@@ -30,7 +31,7 @@ public class AlumnoServiceImplementation implements AlumnoService {
     }
 
     @Override
-    public AlumnoResponseDTO createAlumno(AlumnoRequestDTO alumnoRequestDTO){
+    public AlumnoResponseDTO createAlumno(AlumnoRequestDTO alumnoRequestDTO) throws ExceptionNotFound {
         Alumno objAlumno = alumnoMapper.requestToAlumno(alumnoRequestDTO);
         List<Curso> courses = new ArrayList<>();
         if(alumnoRequestDTO.getCoursesId() != null){
@@ -41,12 +42,12 @@ public class AlumnoServiceImplementation implements AlumnoService {
         return alumnoMapper.alumnoToResponse(objAlumno);
     }
     @Override
-    public Alumno findStudentById(Long studentId){
-        return alumnoRepository.findById(studentId).orElseThrow(() -> new NullPointerException("No existe un alumno con id: " + studentId));
+    public Alumno findStudentById(Long studentId) throws ExceptionNotFound {
+        return alumnoRepository.findById(studentId).orElseThrow(() -> new ExceptionNotFound("Alumno", "ID", studentId.toString()));
     }
 
     @Override
-    public AlumnoResponseDTO asignStudentToCourse(AlumnoCursoRequestDTO alumnoCursoRequestDTO){
+    public AlumnoResponseDTO asignStudentToCourse(AlumnoCursoRequestDTO alumnoCursoRequestDTO) throws ExceptionNotFound {
         Alumno objStudent = findStudentById(alumnoCursoRequestDTO.getStudentId());
         Curso objCourse = cursoService.findCourseById(alumnoCursoRequestDTO.getCourseId());
         List<Curso> objStudentCourses = objStudent.getCourses();
@@ -57,7 +58,7 @@ public class AlumnoServiceImplementation implements AlumnoService {
     }
 
     @Override
-    public List<Alumno> getAllStudentsByIds(List<Long> studentsIds){
+    public List<Alumno> getAllStudentsByIds(List<Long> studentsIds) throws ExceptionNotFound {
         List<Alumno> students = new ArrayList<>();
         for (Long id: studentsIds){
             Alumno student = findStudentById(id);

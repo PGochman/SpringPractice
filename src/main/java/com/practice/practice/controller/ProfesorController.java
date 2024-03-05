@@ -3,6 +3,7 @@ package com.practice.practice.controller;
 import com.practice.practice.dto.request.ProfesorCursoRequestDTO;
 import com.practice.practice.dto.request.ProfesorRequestDTO;
 import com.practice.practice.dto.response.ProfesorResponseDTO;
+import com.practice.practice.exception.ExceptionNotFound;
 import com.practice.practice.service.ProfesorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,13 +23,13 @@ public class ProfesorController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ProfesorResponseDTO> createProfesor(@Valid @RequestBody ProfesorRequestDTO profesorRequestDTO){
+    public ResponseEntity<ProfesorResponseDTO> createProfesor(@Valid @RequestBody ProfesorRequestDTO profesorRequestDTO) throws ExceptionNotFound {
         ProfesorResponseDTO profesorResponseDTO = profesorService.createProfesor(profesorRequestDTO);
         return ResponseEntity.ok(profesorResponseDTO);
     }
 
     @PostMapping("/asignCourse")
-    public ResponseEntity<ProfesorResponseDTO>  asignProfesorToCourse(@Valid @RequestBody ProfesorCursoRequestDTO profesorCursoRequestDTO){
+    public ResponseEntity<ProfesorResponseDTO>  asignProfesorToCourse(@Valid @RequestBody ProfesorCursoRequestDTO profesorCursoRequestDTO) throws ExceptionNotFound {
         ProfesorResponseDTO profesorResponseDTO = profesorService.asignProfesorToCourse(profesorCursoRequestDTO);
         return ResponseEntity.ok(profesorResponseDTO);
     }

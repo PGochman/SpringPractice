@@ -3,6 +3,7 @@ package com.practice.practice.service.implementation;
 import com.practice.practice.dto.mapper.CalificacionMapper;
 import com.practice.practice.dto.request.CalificacionRequestDTO;
 import com.practice.practice.dto.response.CalificacionResponseDTO;
+import com.practice.practice.exception.ExceptionNotFound;
 import com.practice.practice.model.Alumno;
 import com.practice.practice.model.Calificacion;
 import com.practice.practice.model.Curso;
@@ -30,7 +31,7 @@ public class CalificacionServiceImplementation implements CalificacionService {
     }
 
     @Override
-    public CalificacionResponseDTO registerCalificacion(CalificacionRequestDTO calificacionRequestDTO){
+    public CalificacionResponseDTO registerCalificacion(CalificacionRequestDTO calificacionRequestDTO) throws ExceptionNotFound {
         Calificacion objCalificacion = calificacionMapper.requestToCalificacion(calificacionRequestDTO);
         Alumno student = alumnoService.findStudentById(calificacionRequestDTO.getStudentId());
         Curso course = cursoService.findCourseById(calificacionRequestDTO.getCourseId());

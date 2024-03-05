@@ -3,6 +3,7 @@ package com.practice.practice.service.implementation;
 import com.practice.practice.dto.mapper.CursoMapper;
 import com.practice.practice.dto.request.CursoRequestDTO;
 import com.practice.practice.dto.response.CursoResponseDTO;
+import com.practice.practice.exception.ExceptionNotFound;
 import com.practice.practice.model.Alumno;
 import com.practice.practice.model.Curso;
 import com.practice.practice.repository.CursoRepository;
@@ -31,12 +32,12 @@ public class CursoServiceImplementation implements CursoService {
     }
 
     @Override
-    public Curso findCourseById(Long id){
-        return cursoRepository.findById(id).orElseThrow(() -> new NullPointerException("No existe el curso con id: " + id));
+    public Curso findCourseById(Long id) throws ExceptionNotFound {
+        return cursoRepository.findById(id).orElseThrow(() -> new ExceptionNotFound("curso", "ID", id.toString()));
     }
 
     @Override
-    public List<Curso> getAllCoursesByIds(List<Long> coursesIds){
+    public List<Curso> getAllCoursesByIds(List<Long> coursesIds) throws ExceptionNotFound {
         List<Curso> courses = new ArrayList<>();
         for (Long id: coursesIds){
             Curso course = findCourseById(id);
