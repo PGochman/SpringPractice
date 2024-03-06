@@ -32,8 +32,8 @@ public class GradeServiceImplementation implements GradeService {
     @Override
     public GradeResponseDTO registerCalificacion(GradeRequestDTO gradeRequestDTO) throws ExceptionNotFound {
         Grade objGrade = gradeMapper.requestToCalificacion(gradeRequestDTO);
-        Student student = studentService.findStudentById(gradeRequestDTO.getStudentId());
-        Course course = courseService.findCourseById(gradeRequestDTO.getCourseId());
+        Student student = studentService.getStudentById(gradeRequestDTO.getStudentId());
+        Course course = courseService.getCourseById(gradeRequestDTO.getCourseId());
         objGrade.setStudent(student);
         objGrade.setCourse(course);
         gradeRepository.save(objGrade);

@@ -16,7 +16,7 @@ public class Course {
     @ManyToMany(mappedBy = "courses")
     private List<Student> students;
     private Boolean isActive;
-    @OneToMany
+    @OneToMany(mappedBy = "course")
     List<Grade> grades;
 
     public Course(){

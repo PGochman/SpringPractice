@@ -12,14 +12,16 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/alumno")
+@RequestMapping("/student")
 public class StudentController {
+
     private final StudentService studentService;
 
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
-    @PostMapping("/create")
+
+    @PostMapping
     public ResponseEntity<StudentResponseDTO> createAlumno(@Valid @RequestBody StudentRequestDTO studentRequestDTO) throws ExceptionNotFound {
         StudentResponseDTO objAlumnoResponse = studentService.createAlumno(studentRequestDTO);
         return ResponseEntity.ok(objAlumnoResponse);
@@ -27,14 +29,35 @@ public class StudentController {
 
     @PostMapping("/asignCourse")
     public ResponseEntity<StudentResponseDTO> asignStudentToCourse(@Valid @RequestBody StudentCourseRequestDTO studentCourseRequestDTO) throws ExceptionNotFound {
-        StudentResponseDTO objAlumnoResponse = studentService.asignStudentToCourse(studentCourseRequestDTO);
-        return  ResponseEntity.ok(objAlumnoResponse);
+//        try {
+        StudentResponseDTO objStudentResponse = studentService.asignStudentToCourse(studentCourseRequestDTO);
+        return ResponseEntity.ok(objStudentResponse);
+//        } catch (ExceptionNotFound ex){
+//            return ResponseEntity.status(404).body(new StudentOrErrorResponseDTO(ex));
+//        }
     }
 
-    @GetMapping("/course/{id}")
-    public ResponseEntity<List<StudentResponseDTO>> getStudentsFromCourse (@PathVariable Long id) throws ExceptionNotFound {
-        List<StudentResponseDTO> students = studentService.getAllStudentsByCourseId(id);
-        return ResponseEntity.ok(students);
+    @GetMapping("/{id}")
+    public ResponseEntity<StudentResponseDTO> getStudentById(@PathVariable Long id) throws ExceptionNotFound{
+        StudentResponseDTO objStudent = studentService.findStudentById(id);
+        return ResponseEntity.ok(objStudent);
     }
 
+    @GetMapping
+    public ResponseEntity<List<StudentResponseDTO>> getAllStudents(){
+        List<StudentResponseDTO> objStudents = studentService.findAllStudents();
+        return ResponseEntity.ok(objStudents);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<StudentResponseDTO> updateStudent(@PathVariable Long id, @Valid @RequestBody StudentRequestDTO studentRequestDTO) throws ExceptionNotFound {
+        StudentResponseDTO objStudent = studentService.updateStudent(id, studentRequestDTO);
+        return ResponseEntity.ok(objStudent);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<StudentResponseDTO> updateStudent(@PathVariable Long id) throws ExceptionNotFound {
+        StudentResponseDTO objStudent = studentService.deleteStudent(id);
+        return ResponseEntity.ok(objStudent);
+    }
 }

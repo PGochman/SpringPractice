@@ -13,9 +13,7 @@ import com.practice.practice.service.ProfessorService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class ProfessorServiceImplementation implements ProfessorService {
@@ -44,7 +42,7 @@ public class ProfessorServiceImplementation implements ProfessorService {
     @Override
     public ProfessorResponseDTO asignProfesorToCourse(ProfessorCourseRequestDTO professorCourseRequestDTO) throws ExceptionNotFound {
         Professor objProfessor = findProfesorById(professorCourseRequestDTO.getProfesorId());
-        Course objCourse = courseService.findCourseById(professorCourseRequestDTO.getCourseId());
+        Course objCourse = courseService.getCourseById(professorCourseRequestDTO.getCourseId());
         List<Course> courses = objProfessor.getCourses();
         courses.add(objCourse);
         objProfessor.setCourses(courses);
