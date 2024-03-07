@@ -11,7 +11,7 @@ import java.util.List;
 @Component
 @Mapper(componentModel = "spring")
 public interface GradeMapper {
-    Grade requestToCalificacion(GradeRequestDTO gradeRequestDTO);
-    GradeResponseDTO calificacionToResponse(Grade grade);
-    List<GradeResponseDTO> calificacionListToResponseList(List<Grade> grades);
+    Grade requestToGrade(GradeRequestDTO gradeRequestDTO);
+    GradeResponseDTO GradeToResponse(Grade grade);
+    List<GradeResponseDTO> GradeListToResponseList(List<Grade> grades);
 }

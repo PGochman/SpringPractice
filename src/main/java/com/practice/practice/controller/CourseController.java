@@ -2,8 +2,11 @@ package com.practice.practice.controller;
 
 import com.practice.practice.dto.request.CourseRequestDTO;
 import com.practice.practice.dto.response.CourseResponseDTO;
+import com.practice.practice.dto.response.ReturnResponse;
 import com.practice.practice.dto.response.StringResponse;
+import com.practice.practice.exception.ExceptionDeletedData;
 import com.practice.practice.exception.ExceptionNotFound;
+import com.practice.practice.exception.ExceptionReturn;
 import com.practice.practice.service.CourseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,32 +24,62 @@ public class CourseController {
     }
 
     @PostMapping
-    public ResponseEntity<CourseResponseDTO> createCurso(@Valid @RequestBody CourseRequestDTO courseRequestDTO){
+    public ResponseEntity<ReturnResponse> createCourse(@Valid @RequestBody CourseRequestDTO courseRequestDTO){
         CourseResponseDTO courseResponseDTO = courseService.createCurso(courseRequestDTO);
-        return ResponseEntity.ok(courseResponseDTO);
+        return ResponseEntity.ok(new ReturnResponse(courseResponseDTO));
     }
 
     @GetMapping
-    public ResponseEntity<List<CourseResponseDTO>> getAllCourses(){
+    public ResponseEntity<ReturnResponse> getAllCourses(){
         List<CourseResponseDTO> courseResponseDTOS = courseService.getAllCourses();
-        return ResponseEntity.ok(courseResponseDTOS);
+        return ResponseEntity.ok(new ReturnResponse(courseResponseDTOS));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CourseResponseDTO> getCourseById(@PathVariable Long id) throws ExceptionNotFound {
-        CourseResponseDTO courseResponseDTO = courseService.findCourseById(id);
-        return ResponseEntity.ok(courseResponseDTO);
+    public ResponseEntity<ReturnResponse> getCourseById(@PathVariable Long id) {
+        try{
+            CourseResponseDTO courseResponseDTO = courseService.findCourseById(id);
+            return ResponseEntity.ok(new ReturnResponse(courseResponseDTO));
+        } catch (ExceptionNotFound ex){
+            return ResponseEntity.status(404).body(new ReturnResponse(new ExceptionReturn(ex)));
+        }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<CourseResponseDTO> updateCourse(@PathVariable Long id, @Valid @RequestBody CourseRequestDTO courseRequestDTO) throws  ExceptionNotFound{
-        CourseResponseDTO courseResponseDTO = courseService.updateCourse(id, courseRequestDTO);
-        return ResponseEntity.ok(courseResponseDTO);
+    @PutMapping
+    public ResponseEntity<ReturnResponse> updateCourse(@Valid @RequestBody CourseRequestDTO courseRequestDTO){
+        try{
+            courseService.updateCourse(courseRequestDTO);
+            return ResponseEntity.ok(new ReturnResponse(new StringResponse("Curso actualizado con éxito")));
+        } catch (ExceptionNotFound ex){
+            return ResponseEntity.status(404).body(new ReturnResponse(new ExceptionReturn(ex)));
+        } catch (ExceptionDeletedData ex){
+            return ResponseEntity.status(500).body(new ReturnResponse(new ExceptionReturn(ex)));
+        }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<StringResponse> deleteCourse(@PathVariable Long id) throws ExceptionNotFound{
-        CourseResponseDTO courseResponseDTO = courseService.deleteCourse(id);
-        return ResponseEntity.ok(new StringResponse("Curso eliminado correctamente"));
+    @PutMapping("/deactivate/{id}")
+    public ResponseEntity<ReturnResponse> deleteCourse(@PathVariable Long id){
+        try{
+            courseService.deactivateCourse(id);
+            return ResponseEntity.ok(new ReturnResponse(new StringResponse("Curso desactivado correctamente")));
+        } catch (ExceptionNotFound ex){
+            return ResponseEntity.status(404).body(new ReturnResponse(new ExceptionReturn(ex)));
+        } catch (ExceptionDeletedData ex){
+            return ResponseEntity.status(500).body(new ReturnResponse(new ExceptionReturn(ex)));
+        }
+
+    }
+
+    @PutMapping("/restore/{id}")
+    public ResponseEntity<ReturnResponse> restoreCourse(@PathVariable Long id){
+        try{
+            courseService.restoreCourse(id);
+            return ResponseEntity.ok(new ReturnResponse(new StringResponse("Curso reactivado correctamente")));
+        } catch (ExceptionNotFound ex){
+            return ResponseEntity.status(404).body(new ReturnResponse(new ExceptionReturn(ex)));
+        } catch (ExceptionDeletedData ex){
+            return ResponseEntity.status(500).body(new ReturnResponse(new ExceptionReturn(ex)));
+        }
+
     }
 }

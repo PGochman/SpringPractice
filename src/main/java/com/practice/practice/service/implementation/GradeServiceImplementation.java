@@ -32,46 +32,54 @@ public class GradeServiceImplementation implements GradeService {
 
     @Override
     public GradeResponseDTO registerGrade(GradeRequestDTO gradeRequestDTO) throws ExceptionNotFound {
-        Grade objGrade = gradeMapper.requestToCalificacion(gradeRequestDTO);
+        Grade objGrade = gradeMapper.requestToGrade(gradeRequestDTO);
         Student student = studentService.getStudentById(gradeRequestDTO.getStudentId());
         Course course = courseService.getCourseById(gradeRequestDTO.getCourseId());
+
+        objGrade.setActive(true);
         objGrade.setStudent(student);
         objGrade.setCourse(course);
+
         gradeRepository.save(objGrade);
-        return gradeMapper.calificacionToResponse(objGrade);
+        return gradeMapper.GradeToResponse(objGrade);
     }
 
     @Override
     public List<GradeResponseDTO> getGradeByStudentId(Long studentId){
         List<Grade> grades = gradeRepository.findAllByStudentId(studentId);
-        return gradeMapper.calificacionListToResponseList(grades);
+        return gradeMapper.GradeListToResponseList(grades);
     }
 
     @Override
     public  List<GradeResponseDTO> getGradeByCourseId(Long courseId){
         List<Grade> grades = gradeRepository.findAllByCourseId(courseId);
-        return gradeMapper.calificacionListToResponseList(grades);
+        return gradeMapper.GradeListToResponseList(grades);
     }
 
     @Override
     public List<GradeResponseDTO> getAllGrades(){
         List<Grade> grades = gradeRepository.findAll();
-        return gradeMapper.calificacionListToResponseList(grades);
+        return gradeMapper.GradeListToResponseList(grades);
     }
 
     @Override
-    public GradeResponseDTO updateGrade(Long id, GradeRequestDTO gradeRequestDTO) throws ExceptionNotFound {
-        Grade grade = getGradeById(id);
+    public GradeResponseDTO updateGrade(GradeRequestDTO gradeRequestDTO) throws ExceptionNotFound {
+        if(!getGradeById(gradeRequestDTO.getId()).getActive()){
+            throw new ExceptionDeletedData(
+                    "La nota con ID: " + gradeRequestDTO.getId() + " no se encuentra activa",
+                    gradeRequestDTO.getId(),
+                    "Grade");
+        }
         Course course = courseService.getCourseById(gradeRequestDTO.getCourseId());
         Student student = studentService.getStudentById(gradeRequestDTO.getStudentId());
 
-        grade.setGrade(gradeRequestDTO.getGrade());
-        grade.setCourse(course);
-        grade.setStudent(student);
-        grade.setEvaluationType(gradeRequestDTO.getEvaluationType());
+        Grade objGrade = gradeMapper.requestToGrade(gradeRequestDTO);
+        objGrade.setActive(true);
+        objGrade.setStudent(student);
+        objGrade.setCourse(course);
 
-        gradeRepository.save(grade);
-        return gradeMapper.calificacionToResponse(grade);
+        gradeRepository.save(objGrade);
+        return gradeMapper.GradeToResponse(objGrade);
     }
 
     @Override
@@ -80,13 +88,21 @@ public class GradeServiceImplementation implements GradeService {
     }
 
     @Override
-    public GradeResponseDTO deleteGrade(Long id) throws ExceptionNotFound, ExceptionDeletedData{
+    public void deactivateGrade(Long id) throws ExceptionNotFound, ExceptionDeletedData{
         Grade objGrade = getGradeById(id);
-        if(objGrade.getActive()){
-            objGrade.setActive(false);
-        } else {
+        if(!objGrade.getActive()){
             throw new ExceptionDeletedData("Ya esta eliminado la nota con el ID: " + id, id, "Grade");
         }
-        return gradeMapper.calificacionToResponse(objGrade);
+        objGrade.setActive(false);
+        gradeRepository.save(objGrade);
+    }
+    @Override
+    public void restoreGrade(Long id) throws ExceptionNotFound, ExceptionDeletedData{
+        Grade objGrade = getGradeById(id);
+        if(objGrade.getActive()){
+            throw new ExceptionDeletedData("Ya esta eliminado la nota con el ID: " + id, id, "Grade");
+        }
+        objGrade.setActive(false);
+        gradeRepository.save(objGrade);
     }
 }

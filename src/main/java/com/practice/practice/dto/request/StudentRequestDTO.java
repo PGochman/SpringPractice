@@ -19,7 +19,6 @@ public class StudentRequestDTO {
     private String address;
     @NotNull(message = "Se debe ingresar el dni del estudiante")
     private Long dni;
-    private Boolean isActive;
     private List<Long> coursesId;
 
     public StudentRequestDTO(Long dni){
@@ -34,17 +33,7 @@ public class StudentRequestDTO {
         this.address = address;
         this.dni = dni;
         this.coursesId = coursesId;
-        this.isActive = true;
     }
-
-    public Boolean getActive() {
-        return isActive;
-    }
-
-    public void setActive(Boolean active) {
-        isActive = active;
-    }
-
     public Long getId() {
         return id;
     }

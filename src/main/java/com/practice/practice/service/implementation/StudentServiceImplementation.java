@@ -27,9 +27,10 @@ public class StudentServiceImplementation implements StudentService {
     }
 
     @Override
-    public StudentResponseDTO createAlumno(StudentRequestDTO studentRequestDTO) throws ExceptionNotFound {
+    public StudentResponseDTO createStudent(StudentRequestDTO studentRequestDTO) throws ExceptionNotFound {
         Student objStudent = studentMapper.requestToStudent(studentRequestDTO);
 
+        objStudent.setActive(true);
         if(studentRequestDTO.getCoursesId() != null){
             List<Course> courses = courseService.getAllCoursesByIds(studentRequestDTO.getCoursesId());
             objStudent.setCourses(courses);
@@ -44,7 +45,7 @@ public class StudentServiceImplementation implements StudentService {
     }
 
     @Override
-    public StudentResponseDTO asignStudentToCourse(StudentCourseRequestDTO studentCourseRequestDTO) throws ExceptionNotFound {
+    public StudentResponseDTO assignStudentToCourse(StudentCourseRequestDTO studentCourseRequestDTO) throws ExceptionNotFound {
         Student objStudent = getStudentById(studentCourseRequestDTO.getStudentId());
         Course objCourse = courseService.getCourseById(studentCourseRequestDTO.getCourseId());
 
@@ -71,7 +72,6 @@ public class StudentServiceImplementation implements StudentService {
 
         Student objStudentUpdate = studentMapper.requestToStudent(studentRequestDTO);
 
-
         if(studentRequestDTO.getCoursesId() != null){
             List<Course> courses = courseService.getAllCoursesByIds(studentRequestDTO.getCoursesId());
             objStudentUpdate.setCourses(courses);
@@ -82,13 +82,23 @@ public class StudentServiceImplementation implements StudentService {
     }
 
     @Override
-    public StudentResponseDTO deleteStudent(Long id) throws ExceptionNotFound{
+    public void deactivateStudent(Long id) throws ExceptionNotFound{
         Student objStudent = getStudentById(id);
-        if(objStudent.getActive()){
-            objStudent.setActive(false);
-        } else {
+        if(!objStudent.getActive()){
             throw new ExceptionDeletedData("Ya esta eliminado el  estudiante con el ID: " + id, id, "Student");
         }
-        return studentMapper.studentToResponse(objStudent);
+        objStudent.setActive(false);
+        studentRepository.save(objStudent);
+    }
+
+    @Override
+    public void restoreStudent(Long id) throws ExceptionNotFound{
+        Student objStudent = getStudentById(id);
+        if(objStudent.getActive()){
+            throw new ExceptionDeletedData("Ya esta activado el  estudiante con el ID: " + id, id, "Student");
+        }
+        objStudent.setActive(true);
+        studentRepository.save(objStudent);
+
     }
 }

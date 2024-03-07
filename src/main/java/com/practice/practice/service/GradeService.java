@@ -13,7 +13,9 @@ public interface GradeService {
     List<GradeResponseDTO> getGradeByStudentId(Long studentId);
     List<GradeResponseDTO> getGradeByCourseId(Long courseId);
     List<GradeResponseDTO> getAllGrades();
-    GradeResponseDTO updateGrade(Long id, GradeRequestDTO gradeRequestDTO) throws ExceptionNotFound;
+    GradeResponseDTO updateGrade(GradeRequestDTO gradeRequestDTO) throws ExceptionNotFound;
     Grade getGradeById(Long id) throws ExceptionNotFound;
-    GradeResponseDTO deleteGrade(Long id) throws ExceptionNotFound, ExceptionDeletedData;
+    void deactivateGrade(Long id) throws ExceptionNotFound, ExceptionDeletedData;
+    void restoreGrade(Long id) throws ExceptionNotFound, ExceptionDeletedData;
+
 }

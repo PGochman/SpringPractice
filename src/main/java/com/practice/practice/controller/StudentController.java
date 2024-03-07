@@ -3,7 +3,9 @@ package com.practice.practice.controller;
 import com.practice.practice.dto.request.StudentCourseRequestDTO;
 import com.practice.practice.dto.request.StudentRequestDTO;
 import com.practice.practice.dto.response.ReturnResponse;
+import com.practice.practice.dto.response.StringResponse;
 import com.practice.practice.dto.response.StudentResponseDTO;
+import com.practice.practice.exception.ExceptionDeletedData;
 import com.practice.practice.exception.ExceptionNotFound;
 import com.practice.practice.exception.ExceptionReturn;
 import com.practice.practice.service.StudentService;
@@ -24,15 +26,15 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<StudentResponseDTO> createAlumno(@Valid @RequestBody StudentRequestDTO studentRequestDTO) throws ExceptionNotFound {
-        StudentResponseDTO objAlumnoResponse = studentService.createAlumno(studentRequestDTO);
-        return ResponseEntity.ok(objAlumnoResponse);
+    public ResponseEntity<ReturnResponse> createStudent(@Valid @RequestBody StudentRequestDTO studentRequestDTO) throws ExceptionNotFound {
+        StudentResponseDTO objStudentResponse = studentService.createStudent(studentRequestDTO);
+        return ResponseEntity.ok(new ReturnResponse(objStudentResponse));
     }
 
-    @PostMapping("/asignCourse")
-    public ResponseEntity<ReturnResponse> asignStudentToCourse(@Valid @RequestBody StudentCourseRequestDTO studentCourseRequestDTO){
+    @PostMapping("/assignCourse")
+    public ResponseEntity<ReturnResponse> assignStudentToCourse(@Valid @RequestBody StudentCourseRequestDTO studentCourseRequestDTO){
         try {
-        StudentResponseDTO objStudentResponse = studentService.asignStudentToCourse(studentCourseRequestDTO);
+        StudentResponseDTO objStudentResponse = studentService.assignStudentToCourse(studentCourseRequestDTO);
         return ResponseEntity.ok(new ReturnResponse(objStudentResponse));
         } catch (ExceptionNotFound ex){
             return ResponseEntity.status(404).body(new ReturnResponse(new ExceptionReturn(ex)));
@@ -40,31 +42,54 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReturnResponse> getStudentById(@PathVariable Long id) throws ExceptionNotFound{
-        StudentResponseDTO objStudent = studentService.findStudentById(id);
-        ReturnResponse response = new ReturnResponse(objStudent);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<ReturnResponse> getStudentById(@PathVariable Long id){
+        try{
+            StudentResponseDTO objStudent = studentService.findStudentById(id);
+            return ResponseEntity.ok(new ReturnResponse(objStudent));
+        }  catch (ExceptionNotFound ex){
+            return ResponseEntity.status(404).body(new ReturnResponse(new ExceptionReturn(ex)));
+        }
     }
 
     @GetMapping
-    public ResponseEntity<List<StudentResponseDTO>> getAllStudents(){
+    public ResponseEntity<ReturnResponse> getAllStudents(){
         List<StudentResponseDTO> objStudents = studentService.findAllStudents();
-        return ResponseEntity.ok(objStudents);
+        return ResponseEntity.ok(new ReturnResponse(objStudents));
     }
 
     @PutMapping
-    public ResponseEntity<StudentResponseDTO> updateStudent(@Valid @RequestBody StudentRequestDTO studentRequestDTO) throws ExceptionNotFound {
-        StudentResponseDTO objStudent = studentService.updateStudent(studentRequestDTO);
-        return ResponseEntity.ok(objStudent);
+    public ResponseEntity<ReturnResponse> updateStudent(@Valid @RequestBody StudentRequestDTO studentRequestDTO){
+        try{
+            StudentResponseDTO objStudent = studentService.updateStudent(studentRequestDTO);
+            return ResponseEntity.ok(new ReturnResponse(objStudent));
+        }  catch (ExceptionNotFound ex){
+            return ResponseEntity.status(404).body(new ReturnResponse(new ExceptionReturn(ex)));
+        }  catch (ExceptionDeletedData ex){
+            return ResponseEntity.status(500).body(new ReturnResponse(new ExceptionReturn(ex)));
+        }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> updateStudent(@PathVariable Long id) {
+    @PutMapping("/deactivate/{id}")
+    public ResponseEntity<ReturnResponse> deactivateStudent(@PathVariable Long id) {
         try{
-            StudentResponseDTO objStudent = studentService.deleteStudent(id);
-            return ResponseEntity.ok(objStudent);
-        } catch (Exception ex){
-            return ResponseEntity.status(404).body(ex);
+            studentService.deactivateStudent(id);
+            return ResponseEntity.ok(new ReturnResponse(new StringResponse("Estudiante desactivado con exito")));
+        } catch (ExceptionNotFound ex){
+            return ResponseEntity.status(404).body(new ReturnResponse(new ExceptionReturn(ex)));
+        } catch (ExceptionDeletedData ex){
+            return ResponseEntity.status(500).body(new ReturnResponse(new ExceptionReturn(ex)));
+        }
+    }
+
+    @PutMapping("/restore/{id}")
+    public ResponseEntity<ReturnResponse> restore(@PathVariable Long id) {
+        try{
+            studentService.restoreStudent(id);
+            return ResponseEntity.ok(new ReturnResponse(new StringResponse("Estudiante reactivado con exito")));
+        } catch (ExceptionNotFound ex){
+            return ResponseEntity.status(404).body(new ReturnResponse(new ExceptionReturn(ex)));
+        } catch (ExceptionDeletedData ex){
+            return ResponseEntity.status(500).body(new ReturnResponse(new ExceptionReturn(ex)));
         }
     }
 }
