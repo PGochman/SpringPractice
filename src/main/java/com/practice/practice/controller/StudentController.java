@@ -2,8 +2,10 @@ package com.practice.practice.controller;
 
 import com.practice.practice.dto.request.StudentCourseRequestDTO;
 import com.practice.practice.dto.request.StudentRequestDTO;
+import com.practice.practice.dto.response.ReturnResponse;
 import com.practice.practice.dto.response.StudentResponseDTO;
 import com.practice.practice.exception.ExceptionNotFound;
+import com.practice.practice.exception.ExceptionReturn;
 import com.practice.practice.service.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,19 +30,20 @@ public class StudentController {
     }
 
     @PostMapping("/asignCourse")
-    public ResponseEntity<StudentResponseDTO> asignStudentToCourse(@Valid @RequestBody StudentCourseRequestDTO studentCourseRequestDTO) throws ExceptionNotFound {
-//        try {
+    public ResponseEntity<ReturnResponse> asignStudentToCourse(@Valid @RequestBody StudentCourseRequestDTO studentCourseRequestDTO){
+        try {
         StudentResponseDTO objStudentResponse = studentService.asignStudentToCourse(studentCourseRequestDTO);
-        return ResponseEntity.ok(objStudentResponse);
-//        } catch (ExceptionNotFound ex){
-//            return ResponseEntity.status(404).body(new StudentOrErrorResponseDTO(ex));
-//        }
+        return ResponseEntity.ok(new ReturnResponse(objStudentResponse));
+        } catch (ExceptionNotFound ex){
+            return ResponseEntity.status(404).body(new ReturnResponse(new ExceptionReturn(ex)));
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StudentResponseDTO> getStudentById(@PathVariable Long id) throws ExceptionNotFound{
+    public ResponseEntity<ReturnResponse> getStudentById(@PathVariable Long id) throws ExceptionNotFound{
         StudentResponseDTO objStudent = studentService.findStudentById(id);
-        return ResponseEntity.ok(objStudent);
+        ReturnResponse response = new ReturnResponse(objStudent);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
@@ -49,15 +52,19 @@ public class StudentController {
         return ResponseEntity.ok(objStudents);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<StudentResponseDTO> updateStudent(@PathVariable Long id, @Valid @RequestBody StudentRequestDTO studentRequestDTO) throws ExceptionNotFound {
-        StudentResponseDTO objStudent = studentService.updateStudent(id, studentRequestDTO);
+    @PutMapping
+    public ResponseEntity<StudentResponseDTO> updateStudent(@Valid @RequestBody StudentRequestDTO studentRequestDTO) throws ExceptionNotFound {
+        StudentResponseDTO objStudent = studentService.updateStudent(studentRequestDTO);
         return ResponseEntity.ok(objStudent);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<StudentResponseDTO> updateStudent(@PathVariable Long id) throws ExceptionNotFound {
-        StudentResponseDTO objStudent = studentService.deleteStudent(id);
-        return ResponseEntity.ok(objStudent);
+    public ResponseEntity<Object> updateStudent(@PathVariable Long id) {
+        try{
+            StudentResponseDTO objStudent = studentService.deleteStudent(id);
+            return ResponseEntity.ok(objStudent);
+        } catch (Exception ex){
+            return ResponseEntity.status(404).body(ex);
+        }
     }
 }

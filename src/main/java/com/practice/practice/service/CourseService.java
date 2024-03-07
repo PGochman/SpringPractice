@@ -2,6 +2,7 @@ package com.practice.practice.service;
 
 import com.practice.practice.dto.request.CourseRequestDTO;
 import com.practice.practice.dto.response.CourseResponseDTO;
+import com.practice.practice.exception.ExceptionDeletedData;
 import com.practice.practice.exception.ExceptionNotFound;
 import com.practice.practice.model.Course;
 
@@ -14,6 +15,6 @@ public interface CourseService {
     List<Course> getAllCoursesByIds(List<Long> coursesIds) throws ExceptionNotFound;
     List<CourseResponseDTO> getAllCourses();
     CourseResponseDTO updateCourse(Long id, CourseRequestDTO courseRequestDTO) throws ExceptionNotFound;
-    CourseResponseDTO deleteCourse(Long id) throws ExceptionNotFound;
+    CourseResponseDTO deleteCourse(Long id) throws ExceptionNotFound, ExceptionDeletedData;
 
 }

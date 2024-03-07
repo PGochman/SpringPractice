@@ -16,6 +16,6 @@ public interface StudentService {
     StudentResponseDTO findStudentById(Long id) throws ExceptionNotFound;
     StudentResponseDTO asignStudentToCourse(StudentCourseRequestDTO studentCourseRequestDTO) throws ExceptionNotFound;
     List<StudentResponseDTO> findAllStudents();
-    StudentResponseDTO updateStudent(Long id, StudentRequestDTO studentRequestDTO) throws ExceptionNotFound;
+    StudentResponseDTO updateStudent(StudentRequestDTO studentRequestDTO) throws ExceptionNotFound;
     StudentResponseDTO deleteStudent(Long id) throws ExceptionNotFound;
 }

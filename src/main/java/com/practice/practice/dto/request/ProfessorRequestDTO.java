@@ -1,6 +1,8 @@
 package com.practice.practice.dto.request;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 public class ProfessorRequestDTO {
@@ -12,11 +14,11 @@ public class ProfessorRequestDTO {
     @NotNull(message = "Se debe ingresar la especialidad del profesor")
     private String specialty;
     @NotNull(message = "se debe ingresar el dni del profesor")
-    private String dni;
+    private Long dni;
     private Boolean isActive;
     private List<Long> coursesId;
 
-    public ProfessorRequestDTO(Long id, String name, String lastName, String specialty, String dni, List<Long> coursesId) {
+    public ProfessorRequestDTO(Long id, String name, String lastName, String specialty, Long dni, List<Long> coursesId) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -26,11 +28,11 @@ public class ProfessorRequestDTO {
         this.isActive = true;
     }
 
-    public String getDni() {
+    public Long getDni() {
         return dni;
     }
 
-    public void setDni(String dni) {
+    public void setDni(Long dni) {
         this.dni = dni;
     }
 

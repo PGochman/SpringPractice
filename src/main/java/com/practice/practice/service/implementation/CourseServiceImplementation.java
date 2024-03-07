@@ -74,12 +74,12 @@ public class CourseServiceImplementation implements CourseService {
     }
 
     @Override
-    public CourseResponseDTO deleteCourse(Long id) throws ExceptionNotFound{
+    public CourseResponseDTO deleteCourse(Long id) throws ExceptionNotFound, ExceptionDeletedData{
         Course objCourse = getCourseById(id);
         if(objCourse.getActive()){
             objCourse.setActive(false);
         } else {
-            throw new ExceptionDeletedData("Ya esta eliminado el  curso con el ID: " + id, id, "Student");
+            throw new ExceptionDeletedData("Ya esta eliminado el  curso con el ID: " + id, id, "Course");
         }
         return courseMapper.cursoToResponse(objCourse);
     }

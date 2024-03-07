@@ -66,21 +66,19 @@ public class StudentServiceImplementation implements StudentService {
     }
 
     @Override
-    public StudentResponseDTO updateStudent(Long id, StudentRequestDTO studentRequestDTO) throws ExceptionNotFound {
-        Student objStudent = getStudentById(id);
+    public StudentResponseDTO updateStudent(StudentRequestDTO studentRequestDTO) throws ExceptionNotFound {
+        getStudentById(studentRequestDTO.getId());
+
+        Student objStudentUpdate = studentMapper.requestToStudent(studentRequestDTO);
+
 
         if(studentRequestDTO.getCoursesId() != null){
             List<Course> courses = courseService.getAllCoursesByIds(studentRequestDTO.getCoursesId());
-            objStudent.setCourses(courses);
+            objStudentUpdate.setCourses(courses);
         }
-        objStudent.setAddress(studentRequestDTO.getAddress());
-        objStudent.setDni(studentRequestDTO.getDni().toString());
-        objStudent.setBirthDate(studentRequestDTO.getBirthDate());
-        objStudent.setLastName(studentRequestDTO.getLastName());
-        objStudent.setName(studentRequestDTO.getName());
 
-        studentRepository.save(objStudent);
-        return studentMapper.studentToResponse(objStudent);
+        studentRepository.save(objStudentUpdate);
+        return studentMapper.studentToResponse(objStudentUpdate);
     }
 
     @Override
