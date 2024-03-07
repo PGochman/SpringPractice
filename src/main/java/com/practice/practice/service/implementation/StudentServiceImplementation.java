@@ -4,18 +4,16 @@ import com.practice.practice.dto.mapper.StudentMapper;
 import com.practice.practice.dto.request.StudentCourseRequestDTO;
 import com.practice.practice.dto.request.StudentRequestDTO;
 import com.practice.practice.dto.response.StudentResponseDTO;
+import com.practice.practice.exception.ExceptionDeletedData;
 import com.practice.practice.exception.ExceptionNotFound;
 import com.practice.practice.model.Course;
 import com.practice.practice.model.Student;
 import com.practice.practice.repository.StudentRepository;
 import com.practice.practice.service.StudentService;
 import com.practice.practice.service.CourseService;
-import org.mapstruct.ObjectFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class StudentServiceImplementation implements StudentService {
@@ -31,51 +29,66 @@ public class StudentServiceImplementation implements StudentService {
     @Override
     public StudentResponseDTO createAlumno(StudentRequestDTO studentRequestDTO) throws ExceptionNotFound {
         Student objStudent = studentMapper.requestToStudent(studentRequestDTO);
-        //List<Course> courses = new ArrayList<>();
+
         if(studentRequestDTO.getCoursesId() != null){
             List<Course> courses = courseService.getAllCoursesByIds(studentRequestDTO.getCoursesId());
             objStudent.setCourses(courses);
         }
+
         studentRepository.save(objStudent);
         return studentMapper.studentToResponse(objStudent);
     }
     @Override
-    public Student findStudentById(Long studentId) throws ExceptionNotFound {
+    public Student getStudentById(Long studentId) throws ExceptionNotFound {
         return studentRepository.findById(studentId).orElseThrow(() -> new ExceptionNotFound("Alumno", "ID", studentId.toString()));
     }
 
     @Override
     public StudentResponseDTO asignStudentToCourse(StudentCourseRequestDTO studentCourseRequestDTO) throws ExceptionNotFound {
-        Student objStudent = findStudentById(studentCourseRequestDTO.getStudentId());
-        Course objCourse = courseService.findCourseById(studentCourseRequestDTO.getCourseId());
-        //objCourse.getStudents().add(objStudent);
+        Student objStudent = getStudentById(studentCourseRequestDTO.getStudentId());
+        Course objCourse = courseService.getCourseById(studentCourseRequestDTO.getCourseId());
+
         objStudent.addCourse(objCourse);
         studentRepository.save(objStudent);
         return studentMapper.studentToResponse(objStudent);
     }
 
     @Override
-    public List<Student> getAllStudentsByIds(List<Long> studentsIds) throws ExceptionNotFound {
-        List<Student> students = new ArrayList<>();
-        for (Long id: studentsIds){
-            Student student = findStudentById(id);
-            if(student.getId() != null){
-                students.add(student);
-            }
-        }
-        return students;
+    public StudentResponseDTO findStudentById(Long id) throws ExceptionNotFound{
+        Student objStudent = getStudentById(id);
+        return studentMapper.studentToResponse(objStudent);
     }
 
     @Override
-    public List<StudentResponseDTO> getAllStudentsByCourseId(Long id) throws ExceptionNotFound{
-        List<Student> students = new ArrayList<>();
-        for(Student student : studentRepository.findAll()){
-            for(Course course : student.getCourses()){
-                if(Objects.equals(course.getId(), id)){
-                    students.add(student);
-                }
-            }
-        }
+    public List<StudentResponseDTO> findAllStudents(){
+        List<Student> students = studentRepository.findAll();
         return studentMapper.studentListToResponseList(students);
+    }
+
+    @Override
+    public StudentResponseDTO updateStudent(StudentRequestDTO studentRequestDTO) throws ExceptionNotFound {
+        getStudentById(studentRequestDTO.getId());
+
+        Student objStudentUpdate = studentMapper.requestToStudent(studentRequestDTO);
+
+
+        if(studentRequestDTO.getCoursesId() != null){
+            List<Course> courses = courseService.getAllCoursesByIds(studentRequestDTO.getCoursesId());
+            objStudentUpdate.setCourses(courses);
+        }
+
+        studentRepository.save(objStudentUpdate);
+        return studentMapper.studentToResponse(objStudentUpdate);
+    }
+
+    @Override
+    public StudentResponseDTO deleteStudent(Long id) throws ExceptionNotFound{
+        Student objStudent = getStudentById(id);
+        if(objStudent.getActive()){
+            objStudent.setActive(false);
+        } else {
+            throw new ExceptionDeletedData("Ya esta eliminado el  estudiante con el ID: " + id, id, "Student");
+        }
+        return studentMapper.studentToResponse(objStudent);
     }
 }

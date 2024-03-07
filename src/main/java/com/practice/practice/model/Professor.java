@@ -11,8 +11,6 @@ public class Professor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
-    @Positive(message = "El DNI debe ser un numero positivo de 8 dígitos")
-    @Size(min = 8, max = 8, message = "El DNI debe tener 8 digitos")
     private Long dni;
     private String name;
     private String lastName;

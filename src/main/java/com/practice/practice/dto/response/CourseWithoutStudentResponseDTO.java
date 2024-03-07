@@ -1,15 +1,12 @@
 package com.practice.practice.dto.response;
 
-public class CourseWithoutStudentsResponseDTO {
+public class CourseWithoutStudentResponseDTO {
     private Long id;
     private String name;
     private String code;
     private String description;
 
-    public CourseWithoutStudentsResponseDTO() {
-    }
-
-    public CourseWithoutStudentsResponseDTO(Long id, String name, String code, String description) {
+    public CourseWithoutStudentResponseDTO(Long id, String name, String code, String description) {
         this.id = id;
         this.name = name;
         this.code = code;

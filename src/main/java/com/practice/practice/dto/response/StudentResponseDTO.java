@@ -11,12 +11,11 @@ public class StudentResponseDTO {
     private String lastName;
     private Date birthDate;
     private String address;
-    private List<CourseWithoutStudentsResponseDTO> courses;
-
+    private List<CourseWithoutStudentResponseDTO> courses;
     public StudentResponseDTO() {
     }
 
-    public StudentResponseDTO(Long id, String name, String lastName, Date birthDate, String address, List<CourseWithoutStudentsResponseDTO> courses) {
+    public StudentResponseDTO(Long id, String name, String lastName, Date birthDate, String address, List<CourseWithoutStudentResponseDTO> courses) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -65,11 +64,15 @@ public class StudentResponseDTO {
         this.address = address;
     }
 
-    public List<CourseWithoutStudentsResponseDTO> getCourses() {
+    public List<CourseWithoutStudentResponseDTO> getCourses() {
         return courses;
     }
 
-    public void setCourses(List<CourseWithoutStudentsResponseDTO> courses) {
+    public void setCourses(List<CourseWithoutStudentResponseDTO> courses) {
         this.courses = courses;
+    }
+
+    public String toString(){
+        return "ID: " + id + "\n" + "Name: " + name;
     }
 }

@@ -5,7 +5,7 @@ import javax.validation.constraints.*;
 public class GradeRequestDTO {
     private Long id;
     @NotNull(message = "Se debe ingresar una nota de la calificacion")
-    @Min(value = 0, message = "El valor mínimo de la nota es 0")
+    @Min(value = 1, message = "El valor mínimo de la nota es 1")
     @Max(value = 10, message = "El valor máximo de la nota es 10")
     private Float grade;
     @NotNull(message = "Se debe ingresar el tipo de evaluación")

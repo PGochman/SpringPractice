@@ -9,12 +9,12 @@ public class CourseResponseDTO {
     private String name;
     private String code;
     private String description;
-    private List<Student> students;
+    private List<StudentWithoutCourseResponseDTO> students;
 
     public CourseResponseDTO() {
     }
 
-    public CourseResponseDTO(Long id, String name, String code, String description, List<Student> students){
+    public CourseResponseDTO(Long id, String name, String code, String description, List<StudentWithoutCourseResponseDTO> students){
         this.id = id;
         this.name = name;
         this.code = code;
@@ -54,11 +54,11 @@ public class CourseResponseDTO {
         this.description = description;
     }
 
-    public List<Student> getStudents() {
+    public List<StudentWithoutCourseResponseDTO> getStudents() {
         return students;
     }
 
-    public void setStudents(List<Student> students) {
+    public void setStudents(List<StudentWithoutCourseResponseDTO> students) {
         this.students = students;
     }
 }

@@ -4,6 +4,7 @@ import com.practice.practice.dto.mapper.ProfessorMapper;
 import com.practice.practice.dto.request.ProfessorCourseRequestDTO;
 import com.practice.practice.dto.request.ProfessorRequestDTO;
 import com.practice.practice.dto.response.ProfessorResponseDTO;
+import com.practice.practice.exception.ExceptionDeletedData;
 import com.practice.practice.exception.ExceptionNotFound;
 import com.practice.practice.model.Course;
 import com.practice.practice.model.Professor;
@@ -13,9 +14,7 @@ import com.practice.practice.service.ProfessorService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class ProfessorServiceImplementation implements ProfessorService {
@@ -43,8 +42,8 @@ public class ProfessorServiceImplementation implements ProfessorService {
 
     @Override
     public ProfessorResponseDTO asignProfesorToCourse(ProfessorCourseRequestDTO professorCourseRequestDTO) throws ExceptionNotFound {
-        Professor objProfessor = findProfesorById(professorCourseRequestDTO.getProfesorId());
-        Course objCourse = courseService.findCourseById(professorCourseRequestDTO.getCourseId());
+        Professor objProfessor = getProfesorById(professorCourseRequestDTO.getProfesorId());
+        Course objCourse = courseService.getCourseById(professorCourseRequestDTO.getCourseId());
         List<Course> courses = objProfessor.getCourses();
         courses.add(objCourse);
         objProfessor.setCourses(courses);
@@ -53,7 +52,50 @@ public class ProfessorServiceImplementation implements ProfessorService {
     }
 
     @Override
-    public Professor findProfesorById(Long profesorId) throws ExceptionNotFound {
+    public Professor getProfesorById(Long profesorId) throws ExceptionNotFound {
         return professorRepository.findById(profesorId).orElseThrow(() -> new ExceptionNotFound("profesor", "ID", profesorId.toString()));
+    }
+    @Override
+    public ProfessorResponseDTO findProfessorByID(Long id) throws ExceptionNotFound{
+        Professor professor = getProfesorById(id);
+        return professorMapper.profesorToResponse(professor);
+    }
+    @Override
+    public List<ProfessorResponseDTO> findAllProfessors(){
+        List<Professor> professors = professorRepository.findAll();
+        return professorMapper.professorListToResponseList(professors);
+    }
+    @Override
+    public ProfessorResponseDTO updateProfessor(Long id, ProfessorRequestDTO professorRequestDTO) throws ExceptionNotFound{
+        Professor objProfessor = getProfesorById(id);
+
+        if(professorRequestDTO.getCoursesId() != null){
+            List<Course> courses = courseService.getAllCoursesByIds(professorRequestDTO.getCoursesId());
+            objProfessor.setCourses(courses);
+        }
+        objProfessor.setDni(professorRequestDTO.getDni());
+        objProfessor.setName(professorRequestDTO.getName());
+        objProfessor.setLastName(professorRequestDTO.getLastName());
+        objProfessor.setSpecialty(professorRequestDTO.getSpecialty());
+
+        professorRepository.save(objProfessor);
+        return professorMapper.profesorToResponse(objProfessor);
+    }
+    @Override
+    public ProfessorResponseDTO deleteProfessor(Long id) throws ExceptionNotFound{
+        Professor objProfessor = getProfesorById(id);
+        if(objProfessor.getActive()){
+            objProfessor.setActive(false);
+        } else {
+            throw new ExceptionDeletedData("Ya esta eliminado el professor con el ID: " + id, id, "Professor");
+        }
+        return professorMapper.profesorToResponse(objProfessor);
+    }
+    @Override
+    public ProfessorResponseDTO findByLastNameAndSpecialty(String lastname, String specialty) throws ExceptionNotFound {
+        Professor objProfessor = professorRepository.findProfessorByLastNameAndSpecialty(lastname, specialty)
+                .orElseThrow(() ->
+                        new ExceptionNotFound("Professor", "Apellido-Especialidad", lastname + "-" + specialty));
+        return professorMapper.profesorToResponse(objProfessor);
     }
 }

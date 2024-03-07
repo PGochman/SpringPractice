@@ -7,13 +7,13 @@ public class GradeResponseDTO {
     private Long id;
     private Float grade;
     private String evaluationType;
-    private Student student;
-    private Course course;
+    private StudentWithoutCourseResponseDTO student;
+    private CourseWithoutStudentResponseDTO course;
 
     public GradeResponseDTO() {
     }
 
-    public GradeResponseDTO(Long id, Float grade, String evaluationType, Student student, Course course) {
+    public GradeResponseDTO(Long id, Float grade, String evaluationType, StudentWithoutCourseResponseDTO student, CourseWithoutStudentResponseDTO course) {
         this.id = id;
         this.grade = grade;
         this.evaluationType = evaluationType;
@@ -45,18 +45,18 @@ public class GradeResponseDTO {
         this.evaluationType = evaluationType;
     }
 
-    public Student getStudent() {
+    public StudentWithoutCourseResponseDTO getStudent() {
         return student;
     }
 
-    public void setStudent(Student student) {
+    public void setStudent(StudentWithoutCourseResponseDTO student) {
         this.student = student;
     }
-    public Course getCourse() {
+    public CourseWithoutStudentResponseDTO getCourse() {
         return course;
     }
 
-    public void setCourse(Course course) {
+    public void setCourse(CourseWithoutStudentResponseDTO course) {
         this.course = course;
     }
 }
