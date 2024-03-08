@@ -3,11 +3,9 @@ package com.practice.practice.service.implementation;
 import com.practice.practice.dto.mapper.CourseMapper;
 import com.practice.practice.dto.request.CourseRequestDTO;
 import com.practice.practice.dto.response.CourseResponseDTO;
-import com.practice.practice.exception.ExceptionAlreadyExists;
 import com.practice.practice.exception.ExceptionDeletedData;
 import com.practice.practice.exception.ExceptionNotFound;
 import com.practice.practice.model.Course;
-import com.practice.practice.model.Student;
 import com.practice.practice.repository.CourseRepository;
 import com.practice.practice.service.CourseService;
 import org.springframework.stereotype.Service;
@@ -26,10 +24,10 @@ public class CourseServiceImplementation implements CourseService {
 
     @Override
     public CourseResponseDTO createCurso(CourseRequestDTO courseRequestDTO){
-        Course objCourse = courseMapper.requestToCurso(courseRequestDTO);
+        Course objCourse = courseMapper.requestToCourse(courseRequestDTO);
         objCourse.setActive(true);
         courseRepository.save(objCourse);
-        return courseMapper.cursoToResponse(objCourse);
+        return courseMapper.courseToResponse(objCourse);
     }
 
     @Override
@@ -57,7 +55,7 @@ public class CourseServiceImplementation implements CourseService {
     @Override
     public CourseResponseDTO findCourseById(Long id) throws ExceptionNotFound{
         Course course = getCourseById(id);
-        return courseMapper.cursoToResponse(course);
+        return courseMapper.courseToResponse(course);
     }
 
     @Override
@@ -66,7 +64,7 @@ public class CourseServiceImplementation implements CourseService {
             throw new ExceptionDeletedData("El curso con ID: " + courseRequestDTO.getId() + " se encuentra desactivado", courseRequestDTO.getId(), "Courses");
         }
 
-        Course objCourse = courseMapper.requestToCurso(courseRequestDTO);
+        Course objCourse = courseMapper.requestToCourse(courseRequestDTO);
         objCourse.setActive(true);
 
         courseRepository.save(objCourse);
@@ -89,5 +87,4 @@ public class CourseServiceImplementation implements CourseService {
         objCourse.setActive(true);
         courseRepository.save(objCourse);
     }
-
 }

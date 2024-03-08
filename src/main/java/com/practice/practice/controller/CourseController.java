@@ -80,6 +80,5 @@ public class CourseController {
         } catch (ExceptionDeletedData ex){
             return ResponseEntity.status(500).body(new ReturnResponse(new ExceptionReturn(ex)));
         }
-
     }
 }

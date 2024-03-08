@@ -11,8 +11,8 @@ import java.util.List;
 @Component
 @Mapper(componentModel = "spring")
 public interface CourseMapper {
-    Course requestToCurso(CourseRequestDTO courseRequestDTO);
-    CourseResponseDTO cursoToResponse(Course course);
+    Course requestToCourse(CourseRequestDTO courseRequestDTO);
+    CourseResponseDTO courseToResponse(Course course);
 
     List<CourseResponseDTO> courseListToCourseResponseList (List<Course> courses);
 }

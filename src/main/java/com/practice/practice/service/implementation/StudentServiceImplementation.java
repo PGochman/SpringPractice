@@ -49,7 +49,8 @@ public class StudentServiceImplementation implements StudentService {
         Student objStudent = getStudentById(studentCourseRequestDTO.getStudentId());
         Course objCourse = courseService.getCourseById(studentCourseRequestDTO.getCourseId());
 
-        objStudent.addCourse(objCourse);
+        objStudent.getCourses().add(objCourse);
+
         studentRepository.save(objStudent);
         return studentMapper.studentToResponse(objStudent);
     }
@@ -68,7 +69,9 @@ public class StudentServiceImplementation implements StudentService {
 
     @Override
     public StudentResponseDTO updateStudent(StudentRequestDTO studentRequestDTO) throws ExceptionNotFound {
-        getStudentById(studentRequestDTO.getId());
+        if(!getStudentById(studentRequestDTO.getId()).getActive()){
+            throw new ExceptionDeletedData("El estudiante con ID: " + studentRequestDTO.getId() + " se encuentra desactivado", studentRequestDTO.getId(), "Student");
+        }
 
         Student objStudentUpdate = studentMapper.requestToStudent(studentRequestDTO);
 
@@ -76,6 +79,7 @@ public class StudentServiceImplementation implements StudentService {
             List<Course> courses = courseService.getAllCoursesByIds(studentRequestDTO.getCoursesId());
             objStudentUpdate.setCourses(courses);
         }
+        objStudentUpdate.setActive(true);
 
         studentRepository.save(objStudentUpdate);
         return studentMapper.studentToResponse(objStudentUpdate);
@@ -99,6 +103,5 @@ public class StudentServiceImplementation implements StudentService {
         }
         objStudent.setActive(true);
         studentRepository.save(objStudent);
-
     }
 }

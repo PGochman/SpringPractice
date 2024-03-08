@@ -46,9 +46,7 @@ public class ProfessorServiceImplementation implements ProfessorService {
         Professor objProfessor = getProfessorById(professorCourseRequestDTO.getProfesorId());
         Course objCourse = courseService.getCourseById(professorCourseRequestDTO.getCourseId());
 
-        List<Course> courses = objProfessor.getCourses();
-        courses.add(objCourse);
-        objProfessor.setCourses(courses);
+        objProfessor.getCourses().add(objCourse);
 
         professorRepository.save(objProfessor);
         return professorMapper.profesorToResponse(objProfessor);

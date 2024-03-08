@@ -108,14 +108,11 @@ public class Student {
         this.address = address;
     }
 
-    public void addCourse(Course course){
-        if(courses == null){
-            courses = new ArrayList<>();
-        }
-        courses.add(course);
-        if(course.getStudents() == null){
-            course.setStudents(new ArrayList<>());
-        }
-        course.getStudents().add(this);
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
     }
 }

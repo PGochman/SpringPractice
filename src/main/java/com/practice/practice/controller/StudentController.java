@@ -8,6 +8,7 @@ import com.practice.practice.dto.response.StudentResponseDTO;
 import com.practice.practice.exception.ExceptionDeletedData;
 import com.practice.practice.exception.ExceptionNotFound;
 import com.practice.practice.exception.ExceptionReturn;
+import com.practice.practice.model.Student;
 import com.practice.practice.service.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

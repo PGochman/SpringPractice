@@ -8,16 +8,26 @@ public class StudentWithoutCourseResponseDTO {
     private String lastName;
     private Date birthDate;
     private String address;
+    private Boolean isActive;
 
-    public StudentWithoutCourseResponseDTO(Long id, String name, String lastName, Date birthDate, String address) {
+    public StudentWithoutCourseResponseDTO(Long id, String name, String lastName, Date birthDate, String address, Boolean isActive) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.address = address;
+        this.isActive = isActive;
     }
 
     public StudentWithoutCourseResponseDTO() {
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 
     public Long getId() {

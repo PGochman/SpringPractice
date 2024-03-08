@@ -66,7 +66,7 @@ public class ProfessorController {
             return ResponseEntity.status(500).body(new ReturnResponse(new ExceptionReturn(ex)));
         }
     }
-    @PutMapping("/{id}")
+    @PutMapping("/deactivate/{id}")
     public ResponseEntity<ReturnResponse> deactivateProfessor(@PathVariable Long id){
         try{
             ProfessorResponseDTO professorResponseDTO = professorService.deactivateProfessor(id);
@@ -78,7 +78,7 @@ public class ProfessorController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/restore/{id}")
     public ResponseEntity<ReturnResponse> restoreProfessor(@PathVariable Long id){
         try{
             ProfessorResponseDTO professorResponseDTO = professorService.restoreProfessor(id);

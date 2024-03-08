@@ -10,16 +10,28 @@ public class CourseResponseDTO {
     private String code;
     private String description;
     private List<StudentWithoutCourseResponseDTO> students;
+    private List<GradeWithoutCourseResponse> grades;
+    private Boolean isActive;
 
     public CourseResponseDTO() {
     }
 
-    public CourseResponseDTO(Long id, String name, String code, String description, List<StudentWithoutCourseResponseDTO> students){
+    public CourseResponseDTO(Long id, String name, String code, String description, List<StudentWithoutCourseResponseDTO> students, List<GradeWithoutCourseResponse> grades, Boolean isActive){
         this.id = id;
         this.name = name;
         this.code = code;
         this.description = description;
         this.students = students;
+        this.grades = grades;
+        this.isActive = isActive;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 
     public Long getId() {
@@ -60,5 +72,13 @@ public class CourseResponseDTO {
 
     public void setStudents(List<StudentWithoutCourseResponseDTO> students) {
         this.students = students;
+    }
+
+    public List<GradeWithoutCourseResponse> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<GradeWithoutCourseResponse> grades) {
+        this.grades = grades;
     }
 }

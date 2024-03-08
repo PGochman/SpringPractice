@@ -5,12 +5,22 @@ public class CourseWithoutStudentResponseDTO {
     private String name;
     private String code;
     private String description;
+    private Boolean isActive;
 
-    public CourseWithoutStudentResponseDTO(Long id, String name, String code, String description) {
+    public CourseWithoutStudentResponseDTO(Long id, String name, String code, String description, Boolean isActive) {
         this.id = id;
         this.name = name;
         this.code = code;
         this.description = description;
+        this.isActive = isActive;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 
     public Long getId() {

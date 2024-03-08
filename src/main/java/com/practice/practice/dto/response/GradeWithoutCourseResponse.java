@@ -1,26 +1,20 @@
 package com.practice.practice.dto.response;
 
-import com.practice.practice.model.Course;
-import com.practice.practice.model.Student;
-
-public class GradeResponseDTO {
+public class GradeWithoutCourseResponse {
     private Long id;
     private Float grade;
     private String evaluationType;
     private StudentWithoutCourseResponseDTO student;
-    private CourseWithoutStudentResponseDTO course;
     private Boolean isActive;
 
-    public GradeResponseDTO() {
+    public GradeWithoutCourseResponse() {
     }
 
-    public GradeResponseDTO(Long id, Float grade, String evaluationType, StudentWithoutCourseResponseDTO student, CourseWithoutStudentResponseDTO course, Boolean isActive) {
+    public GradeWithoutCourseResponse(Long id, Float grade, String evaluationType, StudentWithoutCourseResponseDTO student) {
         this.id = id;
         this.grade = grade;
         this.evaluationType = evaluationType;
         this.student = student;
-        this.course = course;
-        this.isActive = isActive;
     }
 
     public Boolean getActive() {
@@ -61,12 +55,5 @@ public class GradeResponseDTO {
 
     public void setStudent(StudentWithoutCourseResponseDTO student) {
         this.student = student;
-    }
-    public CourseWithoutStudentResponseDTO getCourse() {
-        return course;
-    }
-
-    public void setCourse(CourseWithoutStudentResponseDTO course) {
-        this.course = course;
     }
 }
