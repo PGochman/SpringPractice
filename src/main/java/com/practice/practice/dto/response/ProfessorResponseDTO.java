@@ -9,16 +9,36 @@ public class ProfessorResponseDTO {
     private String name;
     private String lastName;
     private String specialty;
-    private List<Course> courses;
+    private List<CourseResponseDTO> courses;
+    private Boolean isActive;
+    private Long dni;
 
     public ProfessorResponseDTO() {
     }
-    public ProfessorResponseDTO(Long id, String name, String lastName, String specialty, List<Course> courses) {
+    public ProfessorResponseDTO(Long id, String name, String lastName, String specialty, List<CourseResponseDTO> courses, Boolean isActive, Long dni) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.specialty = specialty;
         this.courses = courses;
+        this.isActive = isActive;
+        this.dni = dni;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public Long getDni() {
+        return dni;
+    }
+
+    public void setDni(Long dni) {
+        this.dni = dni;
     }
 
     public Long getId() {
@@ -53,11 +73,11 @@ public class ProfessorResponseDTO {
         this.specialty = specialty;
     }
 
-    public List<Course> getCourses() {
+    public List<CourseResponseDTO> getCourses() {
         return courses;
     }
 
-    public void setCourses(List<Course> courses) {
+    public void setCourses(List<CourseResponseDTO> courses) {
         this.courses = courses;
     }
 

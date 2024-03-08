@@ -24,9 +24,10 @@ public class CourseServiceImplementation implements CourseService {
 
     @Override
     public CourseResponseDTO createCurso(CourseRequestDTO courseRequestDTO){
-        Course objCourse = courseMapper.requestToCurso(courseRequestDTO);
+        Course objCourse = courseMapper.requestToCourse(courseRequestDTO);
+        objCourse.setActive(true);
         courseRepository.save(objCourse);
-        return courseMapper.cursoToResponse(objCourse);
+        return courseMapper.courseToResponse(objCourse);
     }
 
     @Override
@@ -54,33 +55,36 @@ public class CourseServiceImplementation implements CourseService {
     @Override
     public CourseResponseDTO findCourseById(Long id) throws ExceptionNotFound{
         Course course = getCourseById(id);
-        return courseMapper.cursoToResponse(course);
+        return courseMapper.courseToResponse(course);
     }
 
     @Override
-    public CourseResponseDTO updateCourse(Long id, CourseRequestDTO courseRequestDTO) throws ExceptionNotFound{
-        Course objCourse = getCourseById(id);
-
-        if(!objCourse.getActive()){
-            throw new ExceptionDeletedData("El curso con ID: " + id + " se encuentra borrado de la base de datos", id, "Courses");
+    public void updateCourse(CourseRequestDTO courseRequestDTO) throws ExceptionNotFound{
+        if(!getCourseById(courseRequestDTO.getId()).getActive()){
+            throw new ExceptionDeletedData("El curso con ID: " + courseRequestDTO.getId() + " se encuentra desactivado", courseRequestDTO.getId(), "Courses");
         }
 
-        objCourse.setCode(courseRequestDTO.getCode());
-        objCourse.setName(courseRequestDTO.getName());
-        objCourse.setDescription(courseRequestDTO.getDescription());
+        Course objCourse = courseMapper.requestToCourse(courseRequestDTO);
+        objCourse.setActive(true);
 
         courseRepository.save(objCourse);
-        return courseMapper.cursoToResponse(objCourse);
     }
-
     @Override
-    public CourseResponseDTO deleteCourse(Long id) throws ExceptionNotFound, ExceptionDeletedData{
+    public void deactivateCourse(Long id) throws ExceptionNotFound, ExceptionDeletedData{
         Course objCourse = getCourseById(id);
-        if(objCourse.getActive()){
-            objCourse.setActive(false);
-        } else {
+        if(!objCourse.getActive()){
             throw new ExceptionDeletedData("Ya esta eliminado el  curso con el ID: " + id, id, "Course");
         }
-        return courseMapper.cursoToResponse(objCourse);
+        objCourse.setActive(false);
+        courseRepository.save(objCourse);
+    }
+    @Override
+    public void restoreCourse(Long id) throws ExceptionNotFound, ExceptionDeletedData{
+        Course objCourse = getCourseById(id);
+        if(objCourse.getActive()){
+            throw new ExceptionDeletedData("Ya se encuentra activo el curso con el ID: " + id, id, "Course");
+        }
+        objCourse.setActive(true);
+        courseRepository.save(objCourse);
     }
 }
