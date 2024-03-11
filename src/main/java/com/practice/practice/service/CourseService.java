@@ -14,7 +14,7 @@ public interface CourseService {
     CourseResponseDTO createCurso(CourseRequestDTO courseRequestDTO);
     Course getCourseById(Long id) throws ExceptionNotFound;
     CourseResponseDTO findCourseById(Long id) throws ExceptionNotFound;
-    Set<Course> getAllCoursesByIds(List<Long> coursesIds) throws ExceptionNotFound;
+    Set<Course> getAllCoursesByIds(Set<Long> coursesIds) throws ExceptionNotFound;
     List<CourseResponseDTO> getAllCourses();
     void updateCourse(CourseRequestDTO courseRequestDTO) throws ExceptionNotFound;
     void deactivateCourse(Long id) throws ExceptionNotFound, ExceptionDeletedData;

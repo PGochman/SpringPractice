@@ -7,6 +7,7 @@ import com.practice.practice.dto.response.StringResponse;
 import com.practice.practice.exception.ExceptionDeletedData;
 import com.practice.practice.exception.ExceptionNotFound;
 import com.practice.practice.exception.ExceptionReturn;
+import com.practice.practice.exception.ExceptionUnavailableConnection;
 import com.practice.practice.model.Grade;
 import com.practice.practice.service.GradeService;
 import org.springframework.http.ResponseEntity;
@@ -70,7 +71,7 @@ public class GradeController {
             return ResponseEntity.ok(new ReturnResponse(objGrade));
         } catch (ExceptionNotFound ex){
             return ResponseEntity.status(404).body(new ReturnResponse(new ExceptionReturn(ex)));
-        } catch (ExceptionDeletedData ex){
+        } catch (ExceptionDeletedData | ExceptionUnavailableConnection ex){
             return ResponseEntity.status(500).body(new ReturnResponse(new ExceptionReturn(ex)));
         }
 

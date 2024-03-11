@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class StudentRequestDTO {
     private Long id;
@@ -19,13 +20,13 @@ public class StudentRequestDTO {
     private String address;
     @NotNull(message = "Se debe ingresar el dni del estudiante")
     private Long dni;
-    private List<Long> coursesId;
+    private Set<Long> coursesId;
 
     public StudentRequestDTO(Long dni){
         this.dni = dni;
     }
 
-    public StudentRequestDTO(Long id, String name, String lastName, Date birthDate, String address, Long dni, List<Long> coursesId) {
+    public StudentRequestDTO(Long id, String name, String lastName, Date birthDate, String address, Long dni, Set<Long> coursesId) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -82,11 +83,11 @@ public class StudentRequestDTO {
         this.address = address;
     }
 
-    public List<Long> getCoursesId() {
+    public Set<Long> getCoursesId() {
         return coursesId;
     }
 
-    public void setCoursesId(List<Long> coursesId) {
+    public void setCoursesId(Set<Long> coursesId) {
         this.coursesId = coursesId;
     }
 }

@@ -27,6 +27,13 @@ public class ExceptionHandlerControllerAdvice {
         return new ExceptionWrongMethod(exception);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({ExceptionUnavailableConnection.class})
+    @ResponseBody
+    public ExceptionReturn badConnectionRequest(MethodArgumentNotValidException exception){
+        return new ExceptionReturn(exception);
+    }
+
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
     @ResponseBody

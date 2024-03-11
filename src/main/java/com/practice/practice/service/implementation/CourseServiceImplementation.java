@@ -39,7 +39,7 @@ public class CourseServiceImplementation implements CourseService {
     }
 
     @Override
-    public Set<Course> getAllCoursesByIds(List<Long> coursesIds) throws ExceptionNotFound {
+    public Set<Course> getAllCoursesByIds(Set<Long> coursesIds) throws ExceptionNotFound {
         Set<Course> courses = new HashSet<>();
         for (Long id: coursesIds){
             Course course = getCourseById(id);

@@ -5,6 +5,7 @@ import com.practice.practice.dto.request.GradeRequestDTO;
 import com.practice.practice.dto.response.GradeResponseDTO;
 import com.practice.practice.exception.ExceptionDeletedData;
 import com.practice.practice.exception.ExceptionNotFound;
+import com.practice.practice.exception.ExceptionUnavailableConnection;
 import com.practice.practice.model.Course;
 import com.practice.practice.model.Student;
 import com.practice.practice.model.Grade;
@@ -14,7 +15,9 @@ import com.practice.practice.service.GradeService;
 import com.practice.practice.service.CourseService;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class GradeServiceImplementation implements GradeService {
@@ -35,6 +38,16 @@ public class GradeServiceImplementation implements GradeService {
         Grade objGrade = gradeMapper.requestToGrade(gradeRequestDTO);
         Student student = studentService.getStudentById(gradeRequestDTO.getStudentId());
         Course course = courseService.getCourseById(gradeRequestDTO.getCourseId());
+
+        Set<Long> coursesFromStudent = new HashSet<>();
+
+        for(Course courseFromStudent : student.getCourses() ){
+            coursesFromStudent.add(courseFromStudent.getId());
+        }
+
+        if(!coursesFromStudent.contains(course.getId())){
+            throw new ExceptionUnavailableConnection("El estudiante no cursa la materia a la que se quiere asignar la nota");
+        }
 
         objGrade.setActive(true);
         objGrade.setStudent(student);
@@ -72,6 +85,16 @@ public class GradeServiceImplementation implements GradeService {
         }
         Course course = courseService.getCourseById(gradeRequestDTO.getCourseId());
         Student student = studentService.getStudentById(gradeRequestDTO.getStudentId());
+
+        Set<Long> coursesFromStudent = new HashSet<>();
+
+        for(Course courseFromStudent : student.getCourses() ){
+            coursesFromStudent.add(courseFromStudent.getId());
+        }
+
+        if(!coursesFromStudent.contains(course.getId())){
+            throw new ExceptionUnavailableConnection("El estudiante no cursa la materia a la que se quiere asignar la nota");
+        }
 
         Grade objGrade = gradeMapper.requestToGrade(gradeRequestDTO);
         objGrade.setActive(true);

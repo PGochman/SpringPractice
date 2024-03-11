@@ -2,6 +2,7 @@ package com.practice.practice.dto.request;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 public class CourseRequestDTO {
     private Long id;
@@ -12,12 +13,12 @@ public class CourseRequestDTO {
     @NotNull(message = "Se debe ingresar una descripcion del curso")
     private String description;
     private Boolean isActive;
-    private List<Long> studentsIds;
+    private Set<Long> studentsIds;
 
     public CourseRequestDTO() {
     }
 
-    public CourseRequestDTO(Long id, String name, String code, String description, List<Long> studentsIds) {
+    public CourseRequestDTO(Long id, String name, String code, String description, Set<Long> studentsIds) {
         this.id = id;
         this.name = name;
         this.code = code;
@@ -66,11 +67,11 @@ public class CourseRequestDTO {
         this.description = description;
     }
 
-    public List<Long> getStudentsIds() {
+    public Set<Long> getStudentsIds() {
         return studentsIds;
     }
 
-    public void setStudentsIds(List<Long> studentsIds) {
+    public void setStudentsIds(Set<Long> studentsIds) {
         this.studentsIds = studentsIds;
     }
 }

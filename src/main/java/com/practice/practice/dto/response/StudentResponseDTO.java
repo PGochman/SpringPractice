@@ -4,6 +4,7 @@ import com.practice.practice.model.Course;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class StudentResponseDTO {
     private Long id;
@@ -12,13 +13,13 @@ public class StudentResponseDTO {
     private Date birthDate;
     private Long dni;
     private String address;
-    private List<CourseWithoutStudentResponseDTO> courses;
-    private List<GradeWithoutStudentResponse> grades;
+    private Set<CourseWithoutStudentResponseDTO> courses;
+    private Set<GradeWithoutStudentResponse> grades;
     private Boolean isActive;
     public StudentResponseDTO() {
     }
 
-    public StudentResponseDTO(Long id, String name, String lastName, Date birthDate, Long dni, String address, List<CourseWithoutStudentResponseDTO> courses, List<GradeWithoutStudentResponse> grades, Boolean isActive) {
+    public StudentResponseDTO(Long id, String name, String lastName, Date birthDate, Long dni, String address, Set<CourseWithoutStudentResponseDTO> courses, Set<GradeWithoutStudentResponse> grades, Boolean isActive) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -78,19 +79,19 @@ public class StudentResponseDTO {
         this.address = address;
     }
 
-    public List<CourseWithoutStudentResponseDTO> getCourses() {
+    public Set<CourseWithoutStudentResponseDTO> getCourses() {
         return courses;
     }
 
-    public void setCourses(List<CourseWithoutStudentResponseDTO> courses) {
+    public void setCourses(Set<CourseWithoutStudentResponseDTO> courses) {
         this.courses = courses;
     }
 
-    public List<GradeWithoutStudentResponse> getGrades() {
+    public Set<GradeWithoutStudentResponse> getGrades() {
         return grades;
     }
 
-    public void setGrades(List<GradeWithoutStudentResponse> grades) {
+    public void setGrades(Set<GradeWithoutStudentResponse> grades) {
         this.grades = grades;
     }
 

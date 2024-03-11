@@ -3,6 +3,7 @@ package com.practice.practice.dto.response;
 import com.practice.practice.model.Course;
 
 import java.util.List;
+import java.util.Set;
 
 public class ProfessorResponseDTO {
     private Long id;
@@ -11,11 +12,11 @@ public class ProfessorResponseDTO {
     private String specialty;
     private Boolean isActive;
     private Long dni;
-    private List<CourseResponseDTO> courses;
+    private Set<CourseResponseDTO> courses;
 
     public ProfessorResponseDTO() {
     }
-    public ProfessorResponseDTO(Long id, String name, String lastName, String specialty, List<CourseResponseDTO> courses, Boolean isActive, Long dni) {
+    public ProfessorResponseDTO(Long id, String name, String lastName, String specialty, Set<CourseResponseDTO> courses, Boolean isActive, Long dni) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -73,11 +74,11 @@ public class ProfessorResponseDTO {
         this.specialty = specialty;
     }
 
-    public List<CourseResponseDTO> getCourses() {
+    public Set<CourseResponseDTO> getCourses() {
         return courses;
     }
 
-    public void setCourses(List<CourseResponseDTO> courses) {
+    public void setCourses(Set<CourseResponseDTO> courses) {
         this.courses = courses;
     }
 

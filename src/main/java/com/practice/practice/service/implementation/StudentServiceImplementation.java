@@ -54,7 +54,7 @@ public class StudentServiceImplementation implements StudentService {
         Course objCourse = courseService.getCourseById(studentCourseRequestDTO.getCourseId());
 
         if(!objStudent.getCourses().add(objCourse)){
-            throw new ExceptionAlreadyExists();
+            throw new ExceptionAlreadyExists("El estudiante ya tiene asignado ese curso");
         }
 
         objStudent.getCourses().add(objCourse);

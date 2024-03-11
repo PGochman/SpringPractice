@@ -14,6 +14,7 @@ import com.practice.practice.service.CourseService;
 import com.practice.practice.service.ProfessorService;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -49,7 +50,7 @@ public class ProfessorServiceImplementation implements ProfessorService {
         Course objCourse = courseService.getCourseById(professorCourseRequestDTO.getCourseId());
 
         if(!objProfessor.getCourses().add(objCourse)){
-            throw new ExceptionAlreadyExists();
+            throw new ExceptionAlreadyExists("El profesor ya tiene asignado ese curso");
         }
 
         objProfessor.getCourses().add(objCourse);
@@ -98,6 +99,7 @@ public class ProfessorServiceImplementation implements ProfessorService {
             throw new ExceptionDeletedData("Ya esta desactivado el professor con el ID: " + id, id, "Professor");
         }
         objProfessor.setActive(false);
+        objProfessor.setCourses(new HashSet<>());
         professorRepository.save(objProfessor);
         return professorMapper.profesorToResponse(objProfessor);
     }
