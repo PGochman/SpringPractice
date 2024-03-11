@@ -25,7 +25,7 @@ public class CourseController {
 
     @PostMapping
     public ResponseEntity<ReturnResponse> createCourse(@Valid @RequestBody CourseRequestDTO courseRequestDTO){
-        CourseResponseDTO courseResponseDTO = courseService.createCurso(courseRequestDTO);
+        CourseResponseDTO courseResponseDTO = courseService.createCourse(courseRequestDTO);
         return ResponseEntity.ok(new ReturnResponse(courseResponseDTO));
     }
 

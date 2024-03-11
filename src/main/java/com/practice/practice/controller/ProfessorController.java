@@ -31,7 +31,7 @@ public class ProfessorController {
     }
 
     @PostMapping("/assignCourse")
-    public ResponseEntity<ReturnResponse>  asignProfesorToCourse(@Valid @RequestBody ProfessorCourseRequestDTO professorCourseRequestDTO){
+    public ResponseEntity<ReturnResponse> assignProfessorToCourse(@Valid @RequestBody ProfessorCourseRequestDTO professorCourseRequestDTO){
         try{
             ProfessorResponseDTO professorResponseDTO = professorService.assignProfessorToCourse(professorCourseRequestDTO);
             return ResponseEntity.ok(new ReturnResponse(professorResponseDTO));

@@ -26,7 +26,7 @@ public class CourseServiceImplementation implements CourseService {
     }
 
     @Override
-    public CourseResponseDTO createCurso(CourseRequestDTO courseRequestDTO){
+    public CourseResponseDTO createCourse(CourseRequestDTO courseRequestDTO){
         Course objCourse = courseMapper.requestToCourse(courseRequestDTO);
         objCourse.setActive(true);
         courseRepository.save(objCourse);

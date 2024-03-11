@@ -32,7 +32,7 @@ public class ProfessorServiceImplementation implements ProfessorService {
 
     @Override
     public ProfessorResponseDTO createProfessor(ProfessorRequestDTO professorRequestDTO) throws ExceptionNotFound {
-        Professor objProfessor = professorMapper.requestToProfesor(professorRequestDTO);
+        Professor objProfessor = professorMapper.requestToProfessor(professorRequestDTO);
 
         objProfessor.setActive(true);
         if(professorRequestDTO.getCoursesId() != null){
@@ -41,7 +41,7 @@ public class ProfessorServiceImplementation implements ProfessorService {
         }
 
         professorRepository.save(objProfessor);
-        return professorMapper.profesorToResponse(objProfessor);
+        return professorMapper.professorToResponse(objProfessor);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ProfessorServiceImplementation implements ProfessorService {
         objProfessor.getCourses().add(objCourse);
 
         professorRepository.save(objProfessor);
-        return professorMapper.profesorToResponse(objProfessor);
+        return professorMapper.professorToResponse(objProfessor);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class ProfessorServiceImplementation implements ProfessorService {
     @Override
     public ProfessorResponseDTO findProfessorByID(Long id) throws ExceptionNotFound{
         Professor professor = getProfessorById(id);
-        return professorMapper.profesorToResponse(professor);
+        return professorMapper.professorToResponse(professor);
     }
     @Override
     public List<ProfessorResponseDTO> findAllProfessors(){
@@ -81,7 +81,7 @@ public class ProfessorServiceImplementation implements ProfessorService {
                     "Professor");
         }
 
-        Professor objProfessor = professorMapper.requestToProfesor(professorRequestDTO);
+        Professor objProfessor = professorMapper.requestToProfessor(professorRequestDTO);
 
         if(professorRequestDTO.getCoursesId() != null){
             Set<Course> courses = courseService.getAllCoursesByIds(professorRequestDTO.getCoursesId());
@@ -90,7 +90,7 @@ public class ProfessorServiceImplementation implements ProfessorService {
         objProfessor.setActive(true);
 
         professorRepository.save(objProfessor);
-        return professorMapper.profesorToResponse(objProfessor);
+        return professorMapper.professorToResponse(objProfessor);
     }
     @Override
     public ProfessorResponseDTO deactivateProfessor(Long id) throws ExceptionNotFound{
@@ -101,7 +101,7 @@ public class ProfessorServiceImplementation implements ProfessorService {
         objProfessor.setActive(false);
         objProfessor.setCourses(new HashSet<>());
         professorRepository.save(objProfessor);
-        return professorMapper.profesorToResponse(objProfessor);
+        return professorMapper.professorToResponse(objProfessor);
     }
     @Override
     public List<ProfessorResponseDTO> findByLastNameAndSpecialty(String lastname, String specialty) throws ExceptionNotFound {
@@ -123,6 +123,6 @@ public class ProfessorServiceImplementation implements ProfessorService {
         }
         objProfessor.setActive(true);
         professorRepository.save(objProfessor);
-        return professorMapper.profesorToResponse(objProfessor);
+        return professorMapper.professorToResponse(objProfessor);
     }
 }

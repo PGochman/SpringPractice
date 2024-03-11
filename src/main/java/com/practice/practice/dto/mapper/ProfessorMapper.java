@@ -11,7 +11,7 @@ import java.util.List;
 @Component
 @Mapper(componentModel = "spring")
 public interface ProfessorMapper {
-    Professor requestToProfesor(ProfessorRequestDTO professorRequestDTO);
-    ProfessorResponseDTO profesorToResponse(Professor professor);
+    Professor requestToProfessor(ProfessorRequestDTO professorRequestDTO);
+    ProfessorResponseDTO professorToResponse(Professor professor);
     List<ProfessorResponseDTO> professorListToResponseList(List<Professor> professorList);
 }
