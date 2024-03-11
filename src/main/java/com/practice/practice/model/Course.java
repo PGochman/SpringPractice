@@ -1,8 +1,7 @@
 package com.practice.practice.model;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Course {
@@ -14,15 +13,15 @@ public class Course {
     private String code;
     private String description;
     @ManyToMany(mappedBy = "courses")
-    private List<Student> students;
+    private Set<Student> students;
     private Boolean isActive;
     @OneToMany(mappedBy = "course")
-    List<Grade> grades;
+    Set<Grade> grades;
 
     public Course(){
     }
 
-    public Course(String name, String code, String description, List<Student> students) {
+    public Course(String name, String code, String description, Set<Student> students) {
         this.name = name;
         this.code = code;
         this.description = description;
@@ -30,15 +29,15 @@ public class Course {
         this.isActive = true;
     }
 
-    public List<Grade> getGrades() {
+    public Set<Grade> getGrades() {
         return grades;
     }
 
-    public void setGrades(List<Grade> grades) {
+    public void setGrades(Set<Grade> grades) {
         this.grades = grades;
     }
 
-    public List<Student> getStudents() {
+    public Set<Student> getStudents() {
         return students;
     }
 
@@ -50,7 +49,7 @@ public class Course {
         isActive = active;
     }
 
-    public void setStudents(List<Student> students) {
+    public void setStudents(Set<Student> students) {
         this.students = students;
     }
 

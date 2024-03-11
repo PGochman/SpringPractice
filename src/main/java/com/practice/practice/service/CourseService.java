@@ -8,12 +8,13 @@ import com.practice.practice.exception.ExceptionNotFound;
 import com.practice.practice.model.Course;
 
 import java.util.List;
+import java.util.Set;
 
 public interface CourseService {
     CourseResponseDTO createCurso(CourseRequestDTO courseRequestDTO);
     Course getCourseById(Long id) throws ExceptionNotFound;
     CourseResponseDTO findCourseById(Long id) throws ExceptionNotFound;
-    List<Course> getAllCoursesByIds(List<Long> coursesIds) throws ExceptionNotFound;
+    Set<Course> getAllCoursesByIds(List<Long> coursesIds) throws ExceptionNotFound;
     List<CourseResponseDTO> getAllCourses();
     void updateCourse(CourseRequestDTO courseRequestDTO) throws ExceptionNotFound;
     void deactivateCourse(Long id) throws ExceptionNotFound, ExceptionDeletedData;

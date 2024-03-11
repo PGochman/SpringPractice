@@ -88,6 +88,12 @@ public class GradeServiceImplementation implements GradeService {
     }
 
     @Override
+    public GradeResponseDTO findGradeById(Long id) throws ExceptionNotFound{
+        Grade grade = getGradeById(id);
+        return gradeMapper.GradeToResponse(grade);
+    }
+
+    @Override
     public void deactivateGrade(Long id) throws ExceptionNotFound, ExceptionDeletedData{
         Grade objGrade = getGradeById(id);
         if(!objGrade.getActive()){
@@ -102,7 +108,13 @@ public class GradeServiceImplementation implements GradeService {
         if(objGrade.getActive()){
             throw new ExceptionDeletedData("Ya esta eliminado la nota con el ID: " + id, id, "Grade");
         }
-        objGrade.setActive(false);
+        if(!objGrade.getCourse().getActive()){
+            throw new ExceptionDeletedData("No se puede restaurar la nota porque su curso esta inactivo", id, "Grade");
+        }
+        if(!objGrade.getStudent().getActive()){
+            throw new ExceptionDeletedData("No se puede restaurar la nota porque su estudiante esta inactivo", id, "Grade");
+        }
+        objGrade.setActive(true);
         gradeRepository.save(objGrade);
     }
 }

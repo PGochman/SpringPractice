@@ -6,12 +6,15 @@ import com.practice.practice.dto.response.CourseResponseDTO;
 import com.practice.practice.exception.ExceptionDeletedData;
 import com.practice.practice.exception.ExceptionNotFound;
 import com.practice.practice.model.Course;
+import com.practice.practice.model.Grade;
 import com.practice.practice.repository.CourseRepository;
 import com.practice.practice.service.CourseService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CourseServiceImplementation implements CourseService {
@@ -36,8 +39,8 @@ public class CourseServiceImplementation implements CourseService {
     }
 
     @Override
-    public List<Course> getAllCoursesByIds(List<Long> coursesIds) throws ExceptionNotFound {
-        List<Course> courses = new ArrayList<>();
+    public Set<Course> getAllCoursesByIds(List<Long> coursesIds) throws ExceptionNotFound {
+        Set<Course> courses = new HashSet<>();
         for (Long id: coursesIds){
             Course course = getCourseById(id);
             if(course.getId() != null){
@@ -75,6 +78,14 @@ public class CourseServiceImplementation implements CourseService {
         if(!objCourse.getActive()){
             throw new ExceptionDeletedData("Ya esta eliminado el  curso con el ID: " + id, id, "Course");
         }
+
+        Set<Grade> grades = new HashSet<>();
+        for(Grade grade : objCourse.getGrades()) {
+            grade.setActive(false);
+            grades.add(grade);
+        }
+        objCourse.setGrades(grades);
+
         objCourse.setActive(false);
         courseRepository.save(objCourse);
     }

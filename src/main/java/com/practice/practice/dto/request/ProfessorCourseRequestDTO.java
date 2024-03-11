@@ -7,10 +7,16 @@ public class ProfessorCourseRequestDTO {
     private Long id;
     @NotNull(message = "El id del profesor no puede ser nulo, enviar un valor")
     @Positive(message = "El id del profesor debe ser un numero positivo")
-    private Long profesorId;
+    private Long professorId;
     @NotNull(message = "El id del curso no puede ser nulo, enviar un valor")
     @Positive(message = "El id del curso debe ser un numero positivo")
     private Long courseId;
+
+    public ProfessorCourseRequestDTO(Long id, Long professorId, Long courseId) {
+        this.id = id;
+        this.professorId = professorId;
+        this.courseId = courseId;
+    }
 
     public Long getId() {
         return id;
@@ -20,12 +26,12 @@ public class ProfessorCourseRequestDTO {
         this.id = id;
     }
 
-    public Long getProfesorId() {
-        return profesorId;
+    public Long getProfessorId() {
+        return professorId;
     }
 
-    public void setProfesorId(Long profesorId) {
-        this.profesorId = profesorId;
+    public void setProfessorId(Long professorId) {
+        this.professorId = professorId;
     }
 
     public Long getCourseId() {
@@ -33,12 +39,6 @@ public class ProfessorCourseRequestDTO {
     }
 
     public void setCourseId(Long courseId) {
-        this.courseId = courseId;
-    }
-
-    public ProfessorCourseRequestDTO(Long id, Long profesorId, Long courseId) {
-        this.id = id;
-        this.profesorId = profesorId;
         this.courseId = courseId;
     }
 }

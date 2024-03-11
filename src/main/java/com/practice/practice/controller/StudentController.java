@@ -5,6 +5,7 @@ import com.practice.practice.dto.request.StudentRequestDTO;
 import com.practice.practice.dto.response.ReturnResponse;
 import com.practice.practice.dto.response.StringResponse;
 import com.practice.practice.dto.response.StudentResponseDTO;
+import com.practice.practice.exception.ExceptionAlreadyExists;
 import com.practice.practice.exception.ExceptionDeletedData;
 import com.practice.practice.exception.ExceptionNotFound;
 import com.practice.practice.exception.ExceptionReturn;
@@ -39,6 +40,8 @@ public class StudentController {
         return ResponseEntity.ok(new ReturnResponse(objStudentResponse));
         } catch (ExceptionNotFound ex){
             return ResponseEntity.status(404).body(new ReturnResponse(new ExceptionReturn(ex)));
+        }   catch (ExceptionAlreadyExists ex){
+            return ResponseEntity.status(500).body(new ReturnResponse(new ExceptionReturn(ex)));
         }
     }
 

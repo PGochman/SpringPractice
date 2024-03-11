@@ -25,9 +25,24 @@ public class GradeController {
     }
 
     @PostMapping
-    public ResponseEntity<ReturnResponse> registerGrade (@Valid @RequestBody GradeRequestDTO gradeRequestDTO) throws ExceptionNotFound {
-        GradeResponseDTO gradeResponseDTO = gradeService.registerGrade(gradeRequestDTO);
-        return ResponseEntity.ok(new ReturnResponse(gradeResponseDTO));
+    public ResponseEntity<ReturnResponse> registerGrade (@Valid @RequestBody GradeRequestDTO gradeRequestDTO) {
+        try{
+            GradeResponseDTO gradeResponseDTO = gradeService.registerGrade(gradeRequestDTO);
+            return ResponseEntity.ok(new ReturnResponse(gradeResponseDTO));
+        } catch (ExceptionNotFound ex){
+            return ResponseEntity.status(404).body(new ReturnResponse(new ExceptionReturn(ex)));
+        }
+
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ReturnResponse> getGradeById(@Valid @PathVariable Long id){
+        try{
+            GradeResponseDTO grade = gradeService.findGradeById(id);
+            return ResponseEntity.ok(new ReturnResponse(grade));
+        } catch (ExceptionNotFound ex){
+            return ResponseEntity.ok(new ReturnResponse(new ExceptionReturn(ex)));
+        }
     }
 
     @GetMapping("/student/{id}")

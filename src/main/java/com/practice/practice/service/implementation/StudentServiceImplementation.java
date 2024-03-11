@@ -4,16 +4,20 @@ import com.practice.practice.dto.mapper.StudentMapper;
 import com.practice.practice.dto.request.StudentCourseRequestDTO;
 import com.practice.practice.dto.request.StudentRequestDTO;
 import com.practice.practice.dto.response.StudentResponseDTO;
+import com.practice.practice.exception.ExceptionAlreadyExists;
 import com.practice.practice.exception.ExceptionDeletedData;
 import com.practice.practice.exception.ExceptionNotFound;
 import com.practice.practice.model.Course;
+import com.practice.practice.model.Grade;
 import com.practice.practice.model.Student;
 import com.practice.practice.repository.StudentRepository;
 import com.practice.practice.service.StudentService;
 import com.practice.practice.service.CourseService;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class StudentServiceImplementation implements StudentService {
@@ -32,7 +36,7 @@ public class StudentServiceImplementation implements StudentService {
 
         objStudent.setActive(true);
         if(studentRequestDTO.getCoursesId() != null){
-            List<Course> courses = courseService.getAllCoursesByIds(studentRequestDTO.getCoursesId());
+            Set<Course> courses = courseService.getAllCoursesByIds(studentRequestDTO.getCoursesId());
             objStudent.setCourses(courses);
         }
 
@@ -45,9 +49,13 @@ public class StudentServiceImplementation implements StudentService {
     }
 
     @Override
-    public StudentResponseDTO assignStudentToCourse(StudentCourseRequestDTO studentCourseRequestDTO) throws ExceptionNotFound {
+    public StudentResponseDTO assignStudentToCourse(StudentCourseRequestDTO studentCourseRequestDTO) throws ExceptionNotFound, ExceptionAlreadyExists {
         Student objStudent = getStudentById(studentCourseRequestDTO.getStudentId());
         Course objCourse = courseService.getCourseById(studentCourseRequestDTO.getCourseId());
+
+        if(!objStudent.getCourses().add(objCourse)){
+            throw new ExceptionAlreadyExists();
+        }
 
         objStudent.getCourses().add(objCourse);
 
@@ -76,7 +84,7 @@ public class StudentServiceImplementation implements StudentService {
         Student objStudentUpdate = studentMapper.requestToStudent(studentRequestDTO);
 
         if(studentRequestDTO.getCoursesId() != null){
-            List<Course> courses = courseService.getAllCoursesByIds(studentRequestDTO.getCoursesId());
+            Set<Course> courses = courseService.getAllCoursesByIds(studentRequestDTO.getCoursesId());
             objStudentUpdate.setCourses(courses);
         }
         objStudentUpdate.setActive(true);
@@ -91,6 +99,15 @@ public class StudentServiceImplementation implements StudentService {
         if(!objStudent.getActive()){
             throw new ExceptionDeletedData("Ya esta eliminado el  estudiante con el ID: " + id, id, "Student");
         }
+
+        Set<Grade> grades = new HashSet<>();
+        for(Grade grade : objStudent.getGrades()) {
+            grade.setActive(false);
+            grades.add(grade);
+        }
+        objStudent.setGrades(grades);
+
+        objStudent.setCourses(new HashSet<>());
         objStudent.setActive(false);
         studentRepository.save(objStudent);
     }
@@ -101,6 +118,7 @@ public class StudentServiceImplementation implements StudentService {
         if(objStudent.getActive()){
             throw new ExceptionDeletedData("Ya esta activado el  estudiante con el ID: " + id, id, "Student");
         }
+
         objStudent.setActive(true);
         studentRepository.save(objStudent);
     }

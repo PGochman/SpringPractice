@@ -26,15 +26,15 @@ public class Student {
             joinColumns=@JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
-    private List<Course> courses;
+    private Set<Course> courses;
     private Boolean isActive;
     @OneToMany(mappedBy = "student")
-    List<Grade> grades;
+    Set<Grade> grades;
 
     public Student(){
     }
 
-    public Student(String name, String lastName, Date birthDate, String address, String dni, List<Course> courses){
+    public Student(String name, String lastName, Date birthDate, String address, String dni, Set<Course> courses){
         this.lastName = lastName;
         this.name = name;
         this.birthDate = birthDate;
@@ -60,11 +60,11 @@ public class Student {
         this.dni = dni;
     }
 
-    public List<Course> getCourses() {
+    public Set<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(List<Course> courses) {
+    public void setCourses(Set<Course> courses) {
         this.courses = courses;
     }
 
@@ -108,11 +108,11 @@ public class Student {
         this.address = address;
     }
 
-    public List<Grade> getGrades() {
+    public Set<Grade> getGrades() {
         return grades;
     }
 
-    public void setGrades(List<Grade> grades) {
+    public void setGrades(Set<Grade> grades) {
         this.grades = grades;
     }
 }

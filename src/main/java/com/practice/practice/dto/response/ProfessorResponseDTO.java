@@ -9,9 +9,9 @@ public class ProfessorResponseDTO {
     private String name;
     private String lastName;
     private String specialty;
-    private List<CourseResponseDTO> courses;
     private Boolean isActive;
     private Long dni;
+    private List<CourseResponseDTO> courses;
 
     public ProfessorResponseDTO() {
     }

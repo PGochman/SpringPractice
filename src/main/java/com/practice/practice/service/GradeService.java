@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface GradeService {
     GradeResponseDTO registerGrade(GradeRequestDTO gradeRequestDTO) throws ExceptionNotFound;
+    GradeResponseDTO findGradeById(Long id) throws ExceptionNotFound;
     List<GradeResponseDTO> getGradeByStudentId(Long studentId);
     List<GradeResponseDTO> getGradeByCourseId(Long courseId);
     List<GradeResponseDTO> getAllGrades();

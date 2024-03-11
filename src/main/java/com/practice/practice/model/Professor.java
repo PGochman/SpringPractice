@@ -3,7 +3,9 @@ package com.practice.practice.model;
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Professor {
@@ -11,31 +13,32 @@ public class Professor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
-    private Long dni;
+    @Size(min = 8, max = 8, message = "El DNI debe tener 8 digitos")
+    private String dni;
     private String name;
     private String lastName;
     private String specialty;
     private Boolean isActive;
     @ManyToMany
-    private List<Course> courses;
+    private Set<Course> courses;
 
     public Professor() {
     }
 
-    public Professor(Long dni, String name, String lastName, String specialty, List<Course> courses) {
+    public Professor(String dni, String name, String lastName, String specialty) {
         this.dni = dni;
         this.name = name;
         this.lastName = lastName;
         this.specialty = specialty;
-        this.courses = courses;
+        this.courses = new HashSet<>();
         this.isActive = true;
     }
 
-    public Long getDni() {
+    public String getDni() {
         return dni;
     }
 
-    public void setDni(Long dni) {
+    public void setDni(String dni) {
         this.dni = dni;
     }
 
@@ -47,11 +50,11 @@ public class Professor {
         isActive = active;
     }
 
-    public List<Course> getCourses() {
+    public Set<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(List<Course> courses) {
+    public void setCourses(Set<Course> courses) {
         this.courses = courses;
     }
 

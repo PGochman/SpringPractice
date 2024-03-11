@@ -4,6 +4,7 @@ import com.practice.practice.dto.request.ProfessorCourseRequestDTO;
 import com.practice.practice.dto.request.ProfessorRequestDTO;
 import com.practice.practice.dto.response.ProfessorResponseDTO;
 import com.practice.practice.dto.response.ReturnResponse;
+import com.practice.practice.exception.ExceptionAlreadyExists;
 import com.practice.practice.exception.ExceptionDeletedData;
 import com.practice.practice.exception.ExceptionNotFound;
 import com.practice.practice.exception.ExceptionReturn;
@@ -29,13 +30,15 @@ public class ProfessorController {
         return ResponseEntity.ok(new ReturnResponse(professorResponseDTO));
     }
 
-    @PostMapping("/asignCourse")
+    @PostMapping("/assignCourse")
     public ResponseEntity<ReturnResponse>  asignProfesorToCourse(@Valid @RequestBody ProfessorCourseRequestDTO professorCourseRequestDTO){
         try{
             ProfessorResponseDTO professorResponseDTO = professorService.assignProfessorToCourse(professorCourseRequestDTO);
             return ResponseEntity.ok(new ReturnResponse(professorResponseDTO));
         } catch (ExceptionNotFound ex){
             return ResponseEntity.status(404).body(new ReturnResponse(new ExceptionReturn(ex)));
+        } catch (ExceptionAlreadyExists ex){
+            return ResponseEntity.status(500).body(new ReturnResponse(new ExceptionReturn(ex)));
         }
     }
 
