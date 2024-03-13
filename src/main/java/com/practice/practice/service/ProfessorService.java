@@ -16,8 +16,8 @@ public interface ProfessorService {
     ProfessorResponseDTO findProfessorByID(Long id) throws ExceptionNotFound;
     List<ProfessorResponseDTO> findAllProfessors();
     ProfessorResponseDTO updateProfessor(ProfessorRequestDTO professorRequestDTO) throws ExceptionNotFound;
-    ProfessorResponseDTO deactivateProfessor(Long id) throws ExceptionNotFound;
+    void deactivateProfessor(Long id) throws ExceptionNotFound;
     List<ProfessorResponseDTO> findByLastNameAndSpecialty(String lastname, String specialty) throws ExceptionNotFound;
-    ProfessorResponseDTO restoreProfessor(Long id) throws ExceptionNotFound;
+    void restoreProfessor(Long id) throws ExceptionNotFound;
 
 }

@@ -1,0 +1,11 @@
+com.practice.practice
+com.practice.practice.configuration
+com.practice.practice.controller
+com.practice.practice.dto.mapper
+com.practice.practice.dto.request
+com.practice.practice.dto.response
+com.practice.practice.exception
+com.practice.practice.model
+com.practice.practice.repository
+com.practice.practice.service
+com.practice.practice.service.implementation

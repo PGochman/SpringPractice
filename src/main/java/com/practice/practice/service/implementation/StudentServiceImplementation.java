@@ -56,6 +56,14 @@ public class StudentServiceImplementation implements StudentService {
         if(!objStudent.getCourses().add(objCourse)){
             throw new ExceptionAlreadyExists("El estudiante ya tiene asignado ese curso");
         }
+        if(!objStudent.getActive()){
+            throw new ExceptionDeletedData("El estudiante al que se quiere asignar el curso se encuentra desactivado",
+                    objStudent.getId(), "Student");
+        }
+        if(!objCourse.getActive()){
+            throw new ExceptionDeletedData("El curso al que se quiere inscribir el estudiante se encuentra desactivado",
+                    objCourse.getId(), "Course");
+        }
 
         objStudent.getCourses().add(objCourse);
 

@@ -48,6 +48,14 @@ public class GradeServiceImplementation implements GradeService {
         if(!coursesFromStudent.contains(course.getId())){
             throw new ExceptionUnavailableConnection("El estudiante no cursa la materia a la que se quiere asignar la nota");
         }
+        if(!student.getActive()){
+            throw new ExceptionDeletedData("El estudiante al que se le quiere calificar esta desactivado",
+                    student.getId(), "Student");
+        }
+        if(!course.getActive()){
+            throw new ExceptionDeletedData("El curso al que se le quiere asignar la nota esta desactivado",
+                    course.getId(), "Course");
+        }
 
         objGrade.setActive(true);
         objGrade.setStudent(student);
@@ -94,6 +102,14 @@ public class GradeServiceImplementation implements GradeService {
 
         if(!coursesFromStudent.contains(course.getId())){
             throw new ExceptionUnavailableConnection("El estudiante no cursa la materia a la que se quiere asignar la nota");
+        }
+        if(!student.getActive()){
+            throw new ExceptionDeletedData("El estudiante al que se le quiere calificar esta desactivado",
+                    student.getId(), "Student");
+        }
+        if(!course.getActive()){
+            throw new ExceptionDeletedData("El curso al que se le quiere asignar la nota esta desactivado",
+                    course.getId(), "Course");
         }
 
         Grade objGrade = gradeMapper.requestToGrade(gradeRequestDTO);

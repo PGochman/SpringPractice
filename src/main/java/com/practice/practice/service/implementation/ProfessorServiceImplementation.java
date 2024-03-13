@@ -52,6 +52,14 @@ public class ProfessorServiceImplementation implements ProfessorService {
         if(!objProfessor.getCourses().add(objCourse)){
             throw new ExceptionAlreadyExists("El profesor ya tiene asignado ese curso");
         }
+        if(!objProfessor.getActive()){
+            throw new ExceptionDeletedData("El profesor al que se quiere asignar el curso se encuentra desactivado",
+                    objProfessor.getId(), "Professor");
+        }
+        if(!objCourse.getActive()){
+            throw new ExceptionDeletedData("El curso que se le quiere asignar al profesor se encuentra desactivado",
+                    objCourse.getId(), "Course");
+        }
 
         objProfessor.getCourses().add(objCourse);
 
@@ -93,7 +101,7 @@ public class ProfessorServiceImplementation implements ProfessorService {
         return professorMapper.professorToResponse(objProfessor);
     }
     @Override
-    public ProfessorResponseDTO deactivateProfessor(Long id) throws ExceptionNotFound{
+    public void deactivateProfessor(Long id) throws ExceptionNotFound{
         Professor objProfessor = getProfessorById(id);
         if(!objProfessor.getActive()){
             throw new ExceptionDeletedData("Ya esta desactivado el professor con el ID: " + id, id, "Professor");
@@ -101,7 +109,6 @@ public class ProfessorServiceImplementation implements ProfessorService {
         objProfessor.setActive(false);
         objProfessor.setCourses(new HashSet<>());
         professorRepository.save(objProfessor);
-        return professorMapper.professorToResponse(objProfessor);
     }
     @Override
     public List<ProfessorResponseDTO> findByLastNameAndSpecialty(String lastname, String specialty) throws ExceptionNotFound {
@@ -116,13 +123,12 @@ public class ProfessorServiceImplementation implements ProfessorService {
     }
 
     @Override
-    public ProfessorResponseDTO restoreProfessor(Long id) throws ExceptionNotFound{
+    public void restoreProfessor(Long id) throws ExceptionNotFound{
         Professor objProfessor = getProfessorById(id);
         if(objProfessor.getActive()){
             throw new ExceptionDeletedData("El professor con el ID: " + id + " ya se encuentra activo", id, "Professor");
         }
         objProfessor.setActive(true);
         professorRepository.save(objProfessor);
-        return professorMapper.professorToResponse(objProfessor);
     }
 }
