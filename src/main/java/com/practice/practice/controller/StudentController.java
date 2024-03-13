@@ -113,6 +113,7 @@ public class StudentController {
             return ResponseEntity.status(500).body(new ReturnResponse(new ExceptionReturn(ex)));
         }
     }
+
     /**
      * Desactivar un estudiante
      * @param id id del estudiante a desactivar
