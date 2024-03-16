@@ -17,13 +17,21 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+/**
+ * Implementación de la interfaz CourseService que proporciona lógica de negocio para los profesores.
+ */
 @Service
 public class ProfessorServiceImplementation implements ProfessorService {
     private final ProfessorRepository professorRepository;
     private final ProfessorMapper professorMapper;
     private final CourseService courseService;
 
+    /**
+     * Constructor para la clase ProfesorServiceImplementation
+     * @param professorRepository Repositorio de profesores
+     * @param professorMapper Mapper de profesores
+     * @param courseService Servicio de cursos
+     */
     public ProfessorServiceImplementation(ProfessorRepository professorRepository, ProfessorMapper professorMapper, CourseService courseService) {
         this.professorRepository = professorRepository;
         this.professorMapper = professorMapper;
@@ -101,7 +109,7 @@ public class ProfessorServiceImplementation implements ProfessorService {
         return professorMapper.professorToResponse(objProfessor);
     }
     @Override
-    public void deactivateProfessor(Long id) throws ExceptionNotFound{
+    public void deactivateProfessor(Long id) throws ExceptionNotFound, ExceptionDeletedData{
         Professor objProfessor = getProfessorById(id);
         if(!objProfessor.getActive()){
             throw new ExceptionDeletedData("Ya esta desactivado el professor con el ID: " + id, id, "Professor");
@@ -123,7 +131,7 @@ public class ProfessorServiceImplementation implements ProfessorService {
     }
 
     @Override
-    public void restoreProfessor(Long id) throws ExceptionNotFound{
+    public void restoreProfessor(Long id) throws ExceptionNotFound, ExceptionDeletedData{
         Professor objProfessor = getProfessorById(id);
         if(objProfessor.getActive()){
             throw new ExceptionDeletedData("El professor con el ID: " + id + " ya se encuentra activo", id, "Professor");

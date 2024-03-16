@@ -18,12 +18,21 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+/**
+ * Implementación de la interfaz CourseService que proporciona lógica de negocio para los estudiantes.
+ */
 @Service
 public class StudentServiceImplementation implements StudentService {
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
     private final CourseService courseService;
+
+    /**
+     * Constructor de la clase StudentServiceImplementation
+     * @param studentRepository El repositorio de estudiantes
+     * @param studentMapper El mapper de estudiantes
+     * @param courseService El servicio de cursos
+     */
     public StudentServiceImplementation(StudentRepository studentRepository, StudentMapper studentMapper, CourseService courseService){
         this.studentRepository = studentRepository;
         this.studentMapper = studentMapper;
@@ -102,7 +111,7 @@ public class StudentServiceImplementation implements StudentService {
     }
 
     @Override
-    public void deactivateStudent(Long id) throws ExceptionNotFound{
+    public void deactivateStudent(Long id) throws ExceptionNotFound, ExceptionDeletedData{
         Student objStudent = getStudentById(id);
         if(!objStudent.getActive()){
             throw new ExceptionDeletedData("Ya esta eliminado el  estudiante con el ID: " + id, id, "Student");
@@ -121,7 +130,7 @@ public class StudentServiceImplementation implements StudentService {
     }
 
     @Override
-    public void restoreStudent(Long id) throws ExceptionNotFound{
+    public void restoreStudent(Long id) throws ExceptionNotFound, ExceptionDeletedData{
         Student objStudent = getStudentById(id);
         if(objStudent.getActive()){
             throw new ExceptionDeletedData("Ya esta activado el  estudiante con el ID: " + id, id, "Student");

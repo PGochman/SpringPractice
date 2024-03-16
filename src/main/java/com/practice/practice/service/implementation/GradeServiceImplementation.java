@@ -18,13 +18,23 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+/**
+ * Implementación de la interfaz GradeService que proporciona lógica de negocio para las calificaciones.
+ */
 @Service
 public class GradeServiceImplementation implements GradeService {
     private final GradeRepository gradeRepository;
     private final GradeMapper gradeMapper;
     private final CourseService courseService;
     private final StudentService studentService;
+
+    /**
+     * Constructor para la clase GradeServiceImplementation
+     * @param gradeRepository Repositorio de calificaciones
+     * @param gradeMapper Mapper de calificaciones
+     * @param courseService Servicio de cursos
+     * @param studentService Servicio de estudiantes
+     */
 
     public GradeServiceImplementation(GradeRepository gradeRepository, GradeMapper gradeMapper, CourseService courseService, StudentService studentService) {
         this.gradeRepository = gradeRepository;

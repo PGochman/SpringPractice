@@ -15,11 +15,18 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+/**
+ * Implementación de la interfaz CourseService que proporciona lógica de negocio para los cursos.
+ */
 @Service
 public class CourseServiceImplementation implements CourseService {
     private final CourseRepository courseRepository;
     private final CourseMapper courseMapper;
+    /**
+     * Constructor para la clase CourseServiceImplementation.
+     * @param courseRepository El repositorio de cursos.
+     * @param courseMapper El mapper de cursos.
+     */
     public CourseServiceImplementation(CourseRepository courseRepository, CourseMapper courseMapper) {
         this.courseRepository = courseRepository;
         this.courseMapper = courseMapper;
