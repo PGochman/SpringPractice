@@ -102,7 +102,7 @@ public class CourseWithoutStudentResponseDTO {
 
     /**
      * Establece el código del curso
-     * @param code
+     * @param code código del curso
      */
     public void setCode(String code) {
         this.code = code;

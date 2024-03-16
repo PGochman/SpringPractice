@@ -53,6 +53,7 @@ public class ExceptionHandlerControllerAdvice {
     /**
      * Maneja excepciones de método de solicitud HTTP no permitido.
      * @param exception Excepción lanzada
+     * @param req Información de la petición
      * @return Excepción personalizada con información necesaria
      */
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)

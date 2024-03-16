@@ -48,13 +48,13 @@ public class CourseResponseDTO {
     /**
      * Constructor que instancia los campos de id, name, code, description,
      * students, grades y isActive
-     * @param id
-     * @param name
-     * @param code
-     * @param description
-     * @param students
-     * @param grades
-     * @param isActive
+     * @param id id del curso
+     * @param name nombre del curso
+     * @param code código del curso
+     * @param description descripción del curso
+     * @param students Estudiantes asociados al curso
+     * @param grades Notas asociadas al curso
+     * @param isActive Estado de actividad del curso
      */
     public CourseResponseDTO(Long id, String name, String code, String description, Set<StudentWithoutCourseResponseDTO> students, Set<GradeWithoutCourseResponse> grades, Boolean isActive){
         this.id = id;
